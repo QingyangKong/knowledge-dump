@@ -2,6 +2,7 @@ Although terms function and method are mentioned interchangably in most cases, t
 
 ###1. Codes in function wont be executed when the function is called, it returns itself as final value, while method will be executed and return the final value when the method called.
 
+####Example 1: 
 ```
 scala> def m(): String = "this is a method"
 m: ()String
@@ -24,6 +25,7 @@ scala> test_2()
 res3: String = this is a function
 ```
 Like Javascript, the way to invoke a function is add parentheses after the function name. In this way, when I input `test_2()`, the function can be invoked and return the string.
+####Example 2:
 ```
 scala> def m(i: Int): Int = i + 1
 m: (i: Int)Int
@@ -53,5 +55,45 @@ res0: Int = 2
 Unlike method, fucntion `f`, as an object, can be assgined and is able to return value when arguments provided.
 
 ###2. Functions can be passed to a method or function while method not.
+Define a function `m` and method `f` to do the same logics.
+```
+scala> def m(i: Int): Int = i + 1
+m: (i: Int)Int
 
+scala> val f: Int => Int = i => i + 1
+f: Int => Int = <function1>
+```
+
+Define a method `m_test` that is supposed to get a function as an argument, and `m_test` will print type of function and invoke the function with the other parameter received.
+```
+scala> def m_test(f: Int => Int, i: Int): Unit = { println(f); println(f(i)); }
+m_test: (f: Int => Int, i: Int)Unit
+```
+Pass a function into `m_test`, results shows type of this function is a <function1> and it can be invoked successfully.
+```
+scala> m_test(f, 1)
+<function1>
+2
+```
+Pass a method into `m_test`, method can sill be invoked but be attention that the `m` is a <function1> instead of method before invoke in the method. Scala has already converted a method to a function when passing into a method so that I am able to get the same results as passing a function. This process is called ETA process and it is easier for us to use method as function in Scala.
+```
+scala> m_test(m, 1)
+<function1>
+2
+```
 ###3. Parameter list is option for a method but mandatory for a function 
+Argument is not required for method but for function, parameter is a mandatory and you need to give a `()` if there is no argument needed for the function.
+Define a method `m` and function `f` without parameter:
+```
+scala> def m{}
+m: Unit
+scala> val f: () => Unit = () =>{}
+f: () => Unit = <function0>
+```
+If I define a function without parameter in this way, it is not gonna work. It indicates that there must be a paramter list for function. Maybe syntax is too hard to be handled by compiler to revognized so that functions are required a list of parameters even if is is empty.
+```
+scala> val f:  => Unit = =>{}
+<console>:1: error: identifier expected but '=>' found.
+val f:  => Unit = =>{}
+        ^
+```
