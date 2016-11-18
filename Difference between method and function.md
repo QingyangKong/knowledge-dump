@@ -22,15 +22,18 @@ test: String = this is a method
 scala> val test_2 = f
 test_2: () => String = <function0>
 ```
-From results we can see that `test_1` is a string with value "this is a method", while `test_2` is a function with datatype <function0>. That means when I assgin method to a variable, this method is invoked and executed and then return a value to the variable so the assignment is not a true assignment but an invoke of method. But for function, no value returns and variable assigned is funtion itself. The fact `test_2` is not a value returned but a function indicates that the function is not invoked but assigned as an object.  
+From results we can see that `test_1` is a string "this is a method", while `test_2` is an object with datatype `<function0>`. That means when I assgin method to a variable, this method is invoked and executed and then return a value to the variable so the assignment is not a true assignment but an invoke of method. For function, however, no value returns and variable assigned is funtion itself so `test_2` is not a string but a `<function0>`  
 
-So what shoould I do force function to be invoked?
+So what should I do to force function invoke?
 ```
 scala> test_2()
 res3: String = this is a function
 ```
-Like Javascript, the way to invoke a function is add parentheses after the function name. In this way, when I input `test_2()`, the function can be invoked and return the string.
+Like Javascript, the way to invoke a function is adding parentheses after the function name. When I input `test_2()`, the function can be invoked and return the string.
+
 ####Example 2:
+In last example, methods and functions are without parameter. For this example, functions and methods with one parmater will be used.  
+Define `m` as a method with one parameter, `f` as a function with one parameter. Both of them are going to add one to argument and return a new integer.
 ```
 scala> def m(i: Int): Int = i + 1
 m: (i: Int)Int
@@ -38,7 +41,7 @@ m: (i: Int)Int
 scala> val f: Int => Int = i => i + 1
 f: Int => Int = <function1>
 ```
-Define `m` as a method with one parameter, `f` as a function with one parameter. Both of them are going to add one and return a new integer.
+Now I am trying to assign this method to a variable like what I did example 1.
 ```
 scala> val test_1 = m
 <console>:12: error: missing argument list for method m
@@ -49,7 +52,9 @@ You can make this conversion explicit by writing `m _` or `m(_)` instead of `m`.
 scala> val test_1 = m(1)
 test_1: Int = 2
 ```
-As disscussed above, the method cannot be regarded as an object and it can only be invoked to return a value. If I try to invoke a more-than-zero-argument method given no argument, codes cannot be compiled because logics in the method cannot be executed without parameter. That is also the reason error "missing argument list for method m" poped up. So argument must be provided when the method is invoked.
+As discussed in example 1, the method cannot be regarded as an object and it can only be invoked to return a value. If I invoke a more-than-zero-argument method given no argument, codes cannot be compiled because logics in the method cannot be executed without parameter. That is also the reason error "missing argument list for method m" poped up. In conclude, method can only be invoked but assigned because it is <b>NOT</b> an object.  
+
+What if I assgin a function in the same way.
 ```
 scala> val test_2 = f
 test_2: Int => Int = <function1>
@@ -57,7 +62,7 @@ test_2: Int => Int = <function1>
 scala> test_2(1)
 res0: Int = 2
 ```
-Unlike method, fucntion `f`, as an object, can be assgined and is able to return value when arguments provided.
+It works. Unlike method, fucntion `f`, as an object, can be assgined and is able to return value when arguments provided.
 
 ###2. Functions can be passed to a method or function while method not.
 Define a function `m` and method `f` to do the same logics.
