@@ -1,8 +1,9 @@
-#Difeerences between functions and methods in Scala
+#Differences between functions and methods in Scala
 
-Although terms function and method are mentioned interchangably in most cases, they are not quite the same thing. As first citizen in scala, functions are complete objects implementing different triats such as function0, function1, function2, etc, while a method, like in java, is a part of class or object. In most of situations distinctions between functions and methods can be ignored, but in some case, differences might matter. In practice, there are 3 main differences between functions and methods.
+Although terms function and method are mentioned interchangably in most cases, they are not quite the same thing. As first citizen in scala, functions are complete objects implementing different triats such as function0, function1, function2, etc, while a method, like in java, is a part of class or object. Usually distinctions between functions and methods can be ignored, but in some situations, differences might matter. In practice, there are 3 main differences between functions and methods.
 
-###1. Codes in function wont be executed when the function is called, it returns itself as final value, while method will be executed and return the final value when the method called.
+###1. Functions can be assigned and invoked while method can only be invoked. 
+Codes in function wont be executed when the function is called, it returns itself as final value, while method will be executed and return the final value when the method called.
 
 ####Example 1: 
 Define `m` as a method returning a string "this is a method"  
