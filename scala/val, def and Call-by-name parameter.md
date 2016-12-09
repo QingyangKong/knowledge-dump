@@ -47,7 +47,7 @@ Reason that elements are different is because expression is evaluated every time
 In conclusion, val is evalauted once when it is created but def is evaluated every time it is used.  
 
 ###Use of call-by-name parameter:
-Somtimes we want pass expressions to a method, but expressions(like variable created with keyword def) are always evaluated even though not used in the method at all. Expression misuse will make program do extra work or cause unexpected side-effect.
+Somtimes we want pass expressions to a method, but expressions (like variable created with keyword def) are evaluated when assigned to parameters of the method. In this scenario, expression would be evaluated even though not used in the method at all. Expression misuse will make program do extra work or cause unexpected side-effect. The aim of call-by-parameter is to avoid `def`s to be evaluated in parameters.
 ####example 3
 ```
 scala> def sayHi(name: String, exp_1: Unit, exp_2: Unit, exp_3: Unit){
@@ -75,8 +75,8 @@ Hello Frank
 Hello Tom
 Hello Ann
 ```
-After I call the method `sayHi` all of 3 "def"s are evalauted even though they are not used in the method yet. After evaluation, 3 of them are converted into Unit and cannot be evaluated when they are used in the method.  
-Because expected result is "Hello Frank", I need to ensure the other 2 are only evalauted when used. How to do this? Scala provides a way called call-by-name parameter. In order to use the feature, I need to define method as below:
+After I call the method `sayHi` all of 3 "def"s are evalauted even though they are not used in the method at all. In the method body, `exp_1`, `exp_2` and `exp_3` would be used, but after evaluation, all of them are `Unit` and cannot be evaluated again when they are actually used in the method.
+Because expected result is "Hello Frank", I need to make sure that only `exp_1` evaluated in method body. How to do this? Scala provides a way called call-by-name parameter. In order to use the feature, I need to define method as below:
 ```
 scala> def sayHi(name: String, exp_1: => Unit, exp_2: => Unit, exp_3: => Unit){
      |   behavior match{
@@ -91,7 +91,7 @@ scala> sayHi("Frank", helloFrank, helloTom, helloAnn)
 Hello Frank
 ```
 This time I get the right answer. By defining expressions with type `: => Unit`, it can be promised that expressions are only evaluated when they are used. In this example `exp_1`, `exp_2` and `exp_3` are called call-by-name parameter.  
-In conclusion, I can make sure "def"s are not evaluated unless they are used.
+In conclusion, I am aboe to make sure that "def"s wouldn't be evaluated unless they are used.
 
 ###Keyword "lazy"
 keyword lazy is used before "val". If "lazy" is used, the val is evaluated at time when used rather than created, but it is still evaluated only once. That means "lazy val" only evaluated when used and after that this "lazy val" will keep the same and not evaluated again.  
