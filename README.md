@@ -1,2 +1,2 @@
-# ScalaSparkPlay
-Put some stuff I learned about scala and spark
+# Knowldge-dump
+Put some stuff I learned in work
