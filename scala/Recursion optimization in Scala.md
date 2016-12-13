@@ -124,4 +124,66 @@ Result:
 ```
 Although the result is not correct, this function can be executed as planed without stackoverflow exception. As last example, the fact that no stack overflow in tail recursion indicated that scala supports TRO.
 
-###CPS in Scala
+###CPS in Scala  
+In my understanding, CPS is a way that pass mutable state through an expression that is a lamda expression with only one parameter. When the CPS function is completed it returns by calling continuation function with value as an argument in the continuation function. 
+So in theory, the CPS function does not required much space in stack because space for old stack layer would be freed as soon as possible. But in order to reducing space allocated in stack, language has to support Tail Call Optimization. Let's see if scala has TCO feature.  
+Example 3 and 4 are CPS way to write Triangular Number and FiboNacci function.
+
+Example 3:  
+<b>Triangular Number in CPS</b>
+```
+def triangularNumCPS(x: Long, cont: Long => Long): Long = x match{
+  case 1 => cont(1)
+  case _ => triangularNumCPS(x - 1, tmp => cont(x + tmp))
+}
+println(triangularNumCPS(100, x=> x))
+println(triangularNumCPS(19999, x => x))
+```
+Result:
+```
+5050
+Exception in thread "main" java.lang.StackOverflowError
+```
+Stack overflow happens, that means the TCO is not supported in Scala. So in the Fibonacci function in CPS, the same problem should happen. Let's see the result in example 4.
+
+Example 4:  
+<b>Fibonacci in CPS</b>
+```
+def fiboCPS(fib: Long, f: Long => Long): Long = fib match {
+  case 1 => f(1)
+  case 2 => f(1)
+  case _ => fiboCPS(fib - 1, x1 => fiboCPS(fib - 2, x2 => f(x1 + x2)))
+}
+println(fiboCPS(8, x => x))
+println(fiboCPS(10000, x => x))
+```
+Results:
+```
+34
+Exception in thread "main" java.lang.StackOverflowError
+```
+Result is as expected, stack overflows again and the result indicates that TCO is not supported in Scala. Although it is possible to write CPS function in scala, it is not safe to use CPS function beucause actually space in stack is still used in this way.
+
+###Tail Recursion Annotation
+There is a easy way in scala to verify the recursion is safe or not: `@tailrec`. This annotation to test if the function is a tail recursion and throw compile error if it is not.  
+Be attention, `@tailrec` only verify but would not help to transfer a recursion to tail recursion.
+Example 5:
+`import scala.annotation.tailrec`
+import lib first
+```
+@tailrec
+def triangularNumRec(x: Long): Long = x match{
+  case 1 => 1
+  case _ => triangularNumRec(x - 1) + x
+}
+```
+When use the annotation to a non-tail-recursion function, there would be an error "could not optimize @tailrec annotated method trinagularNumRec: it contains a recursive call not in the tail position".
+
+```
+@tailrec
+def triangularNumTailRec(x: Long, result: Long): Long = x match{
+  case 1 => result + 1
+  case _ => triangularNumTailRec(x - 1, result + x)
+}
+```
+When used to annotated a tail-recursion function, there is no error. So the annotation is a siren to warn the danger but is not able to fix the bug.
