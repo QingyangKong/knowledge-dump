@@ -25,8 +25,8 @@ def triangularNum(x: Long): Long = {
   result
 }
 
-triangularNum(100)
-triangularNum(19999)
+println(triangularNum(100))
+println(triangularNum(19999))
 ```
 Results:
 ```
@@ -40,8 +40,8 @@ def triangularNumRec(x: Long): Long = x match{
   case 1 => 1
   case _ => triangularNumRec(x - 1) + x
 }
-triangularNumRec(100)
-triangularNumRec(19999)
+println(triangularNumRec(100))
+println(triangularNumRec(19999))
 ```
 Results:
 ```
@@ -50,7 +50,7 @@ Exception in thread "main" java.lang.StackOverflowError
 ```
 Well, in the recursive function, if a very big number passed in, exception stack overflow would be thrown out because memory used up.  
 
-<b>Tail Recustion:</b>  
+<b>Tail Recursion:</b>  
 This is a tail recursion, because there is nothing needs to be maintained in the current stack layer and recursive call is the very last thing in the function. So the old stack space can be freed when new space allocated if tail recursion is optimized by the language.
 
 ```
@@ -58,8 +58,8 @@ def triangularNumTailRec(x: Long, result: Long): Long = x match{
   case 1 => result + 1
   case _ => triangularNumTailRec(x - 1, result + x)
 }
-triangularNumTailRec(100, 0)
-triangularNumTailRec(19999, 0)
+println(triangularNumTailRec(100, 0))
+println(triangularNumTailRec(19999, 0))
 ```
 Results:
 ```
@@ -68,4 +68,60 @@ Results:
 ```
 No stack overflow! That means scala does have the feature TRO. If there is nothing needs maintained, stack memory would be freed.
 ####Example 2
-Fibonacci: every number after the first two is the sum of the two preceding one.
+Fibonacci: every number after the first two is the sum of the two preceding one.  
+eg: Fibonacci sequence: 1, 1, 2, 3, 5, 8, 13, ..... fibonacci(3) = 2 fibonacci(6) = 8  
+<b>For Loop</b>
+```
+def fibo(fib:Long): Long = {
+  var num_1 = 0L
+  var num_2 = 1L
+  var result = 0L
+  for(i <- 2L to fib){
+    result = num_1 + num_2
+    num_1 = num_2
+    num_2 = result
+  }
+  return result 
+}
+println(fibo(6))
+println(fibo(10000))
+```
+Results:
+```
+8
+-2872092127636481573
+```
+The result for fib(10000) is not correct because the number is too large to show.  
+<b>Recursion</b>
+```
+def fiboRec(fib: Long): Long = fib match {
+  case 0 => 0
+  case 1 => 1
+  case _ => fiboRec(fib - 1) + fiboRec(fib - 2)
+}
+println(fiboRec(6))
+println(fiboRec(10000))
+```
+Results:
+```
+8
+Exception in thread "main" java.lang.StackOverflowError
+```
+As expected, the too much space in stack is allocated so stack overflow exception happens.  
+<b>Tail Recursion</b>
+```
+def fiboTailRec(fib: Long, num_1: Long, num_2: Long): Long = fib match {
+  case 0 => num_1
+  case _ => fiboTailRec(fib - 1, num_2, num_1 + num_2)
+}
+println(fiboTailRec(6, 0, 1))
+println(fiboTailRec(10000, 0, 1))
+```
+Result:
+```
+8
+-2872092127636481573
+```
+Although the result is not correct, this function can be executed as planed without stackoverflow exception. As last example, the fact that no stack overflow in tail recursion indicated that scala supports TRO.
+
+###CPS in Scala
