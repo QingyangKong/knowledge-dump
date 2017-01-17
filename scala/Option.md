@@ -1,9 +1,9 @@
 <h2>Use of Option data type</h2>
 <h3>1. Introduction:</h3>
-Option is a data type used in Scala to avoid null pointer exception. In Java, this kind of exception happens when the codes rely on a variable that is a unexpected null. There are 2 types of data type in option: `None` and `Some`, when there is no value in option, it is None, otherwise Some.
+Option is a data type used in Scala to avoid null pointer exception. In Java, this kind of exception happens when the codes rely on a variable assigned as null unexpectedly. There are 2 types of data types in option: `None` and `Some`, when there is no value in option, it is None, otherwise Some. These 2 possiblities indicate that option is may or may not be null in data type level.
 <h3>2. Use Cases</h3>
 <h4>2.1 pattern match</h4>
-Because Option is a case class, it can be used in pattern match perfectly. All values fetched from a map is an Option object with 2 possibilities: Some and None.
+Because Option is a case class, it can be used in pattern match perfectly. All values fetched from a map are Option objects(Some or None).
 ```
 val testMap: Map[String, String] = Map("US" -> "DC", "China" -> "Beijing")
 testMap: scala.collection.immutable.Map[String,String] = Map(US -> DC, China -> Beijing)
