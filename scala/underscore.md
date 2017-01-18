@@ -30,8 +30,22 @@ object underscoreTest {
 ```
 result is:
 `2`
-<h3>2. successive underscores</h3>
-Each successive underscores implies another argument of in the anonymous function.
+<h3>Underscores in anonymous function</h3>
+The underscore acts as a placeholder in anonymous function and first one is a short form of second one. If there is only on parameter for the function, underscore can even be skipped.
+```
+val list = List(1, 2, 3, 4)
+val newList_1 = list.map ( print(_) )
+println
+val newList_2 = list.map ( x => print(x) )
+println
+val newList_3 = list.map ( print )
+println
+Result is:
+1234
+1234
+1234
+```
+Underscores can be used for 2 parameters, and each successive underscores implies another argument of in the anonymous function.
 ```
 val list = List((1, 2), (3, 4), (5, 6), (7, 8))
 val newList = list.map(x => x._1 + x._2)
