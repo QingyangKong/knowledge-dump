@@ -1,4 +1,6 @@
 <h1>Java version related configuration in eclipse</h1>
+For any java project, 2 things need to be set: java runtime environment and java compiler. I am going to illustrate how to configure these 2 setting in the eclipse IDE in this article.
+
 <h3>1. What is java compiler level?</h3>
 It is version of compiler to compile source codes. Java compiler compliance level can be set in the `window->preference->java->compiler`, and it is used to compile source codes into java classes. Eclipse has its own java compilers. The compiliance level is equal to command "java -source xx".
 
@@ -20,7 +22,7 @@ By doing this, all new created projects would use these versions.
 
 <h3>6. Set version for a project</h3>
 Instead of using global settings, sometimes we need to set specific runtime and compiler versions for specific project.  
-Change JRE System Library or change java in project facet to change Java runtime version for a particular project.
+Change JRE System Library or change java in project facet to change Java runtime version for a particular project.  
 Change Java compiler level in the `properties` of project to set compiler level for a particular project.  
 
 <h3>Attention</h3>
