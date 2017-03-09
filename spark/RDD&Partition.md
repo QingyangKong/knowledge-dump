@@ -4,6 +4,7 @@ content
 <li>Which one we should use? map or mapPartitions?</li>
 
 <h3>1. What is RDD, parition and node?</h3>
+<h4>definitions</h4>
 RDD(Resilient Distributed Dataset) is an abstraction of distributed data. Although it looks as same as other collection, it consists of multiple partitions that are saved across multiple nodes.  
 
 For a RDD, there are multiple partitions, these partitions would be scattered across multiple nodes.  
@@ -29,11 +30,30 @@ println("number of rdd_3 partitions is: " + rdd_3.partitions.size)
 ```
 results of the codes are:  
 ```
-number of rss_1 partitions is: 16
+number of rdd_1 partitions is: 16
 number of rdd_2 partitions is: 16
 number of rdd_3 partitions is: 10
 ```
 Through results, it is relatively obvious to see the default of number of partitions in current spark is 16 and it is also possible to set a specific number of parttitions.
+<h4>How partition works in Spark?</h4>
+All logics that is to be executed in worker node needs to be serialized into a closure and passed across multiple nodes. 
+In every node, every partition holds a separate memory for the closure. That means if I pass a variable to node, every partition in the node have a copy of the variable that does not sync with each other.
+Program below can certify what stated above:
+```
+val rdd_1 = sc.makeRDD(1 to 10, 2)
+var counter = 0
+rdd_1.map(x => {counter += 1; (x, counter)}).collect.foreach{case(x, count) => print(s"($x, $count) ")}
+```
+result: (1, 1) (2, 2) (3, 3) (4, 4) (5, 5) (6, 1) (7, 2) (8, 3) (9, 4) (10, 5)  
+```
+val rdd_2 = sc.makeRDD(1 to 10, 10)
+var counter = 0
+rdd_2.map(x => {counter += 1; (x, counter)}).collect.foreach{case(x, count) => print(s"($x, $count) ")}
+```
+result: (1, 1) (2, 1) (3, 1) (4, 1) (5, 1) (6, 1) (7, 1) (8, 1) (9, 1) (10, 1)  
+
+In resutls, counter ranges from 1 to 5 in rdd_1, but only 1 in rdd_2. In rdd_1 10 elements is separated into 2 partitions so counter is incremented  for 5 times, while 10 elements are devided into 10 partitions and every partition only has 1 element. From results it is not difficult to know every partition has a "heap" to do all operations for elements within it.  
+To conclude, more partitions, more space used and more tasks spark execute in the same time period. 
 
 <h3>2. Which one we should use? map or mapPartitions?</h3>
 We can usually see methods: map and mapPartitions, and basically these 2 methods are different ways handling RDD: first is against every single element in a RDD and second is against partition and treat it as a iterator. Difference between `foreach` and `foreachPartition` is in the same way. (Check _tip2_ to see difference between `foreach` and `map`)  
