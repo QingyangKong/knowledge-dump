@@ -1,18 +1,17 @@
 <h1>RDD, partitions and nodes</h1>
 content
-<li>Basics of RDD, parition and node</li>
-<li>Partitions of a RDD</li>
-<li>Operations on single element and partition of elements</li>
+<li>What is RDD, parition and node?</li>
+<li>Which one we should use? map or mapPartitions?</li>
 
-<h3>1. Basics of RDD, parition and node</h3>
+<h3>1. What is RDD, parition and node?</h3>
 RDD(Resilient Distributed Dataset) is an abstraction of distributed data. Although it looks as same as other collection, it consists of multiple partitions that are saved across multiple nodes.  
 
 For a RDD, there are multiple partitions, these partitions would be scattered across multiple nodes.  
 Single node can handle multiple partitions(with optimum 2-4 partitions per CPU).  
 One partition can only reside on the a single node.  
 
-[Check this stackoverflow website for more details](http://stackoverflow.com/questions/354909/is-there-a-difference-between-foreach-and-map)
-<h3>2. Partitions of a RDD</h3>
+[Check this stackoverflow website for more details](http://stackoverflow.com/questions/354909/is-there-a-difference-between-foreach-and-map)  
+   
 We can see the partitions of a RDD by following codes. `rdd.partitions` returns array of partitions within RDD. 
 To make RDD, 2 methods `makeRDD` and `parallelize` are equal, see _Tip1_.
 ```
@@ -36,7 +35,7 @@ number of rdd_3 partitions is: 10
 ```
 Through results, it is relatively obvious to see the default of number of partitions in current spark is 16 and it is also possible to set a specific number of parttitions.
 
-<h3>3. Operations on single element and partition of elements</h3>
+<h3>2. Which one we should use? map or mapPartitions?</h3>
 We can usually see methods: map and mapPartitions, and basically these 2 methods are different ways handling RDD: first is against every single element in a RDD and second is against partition and treat it as a iterator. Difference between `foreach` and `foreachPartition` is in the same way. (Check _tip2_ to see difference between `foreach` and `map`)  
 
 If you are sick of my bad English, see the codes below:  
@@ -92,4 +91,4 @@ val list = 1 to 10 toList
 val rdd_1 = sc.makeRDD(list)
 val rdd_2 = sc.parallelize(list)
 ```
-These 2 methods are basically the same things, and makeRDD is identical to parallelizeaccording to [this link](http://stackoverflow.com/questions/31428128/in-spark-api-what-is-the-difference-between-makerdd-functions-and-parallelize-f)
+These 2 methods are basically the same things, and makeRDD is identical to parallelize according to [this link](http://stackoverflow.com/questions/31428128/in-spark-api-what-is-the-difference-between-makerdd-functions-and-parallelize-f)
