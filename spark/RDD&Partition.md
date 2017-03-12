@@ -1,11 +1,11 @@
 <h1>RDD, partitions and nodes</h1>
 content
 <li>What is RDD, parition and node?</li>
-<li>Which one we should use? map or mapPartitions?</li>
+<li>Which one should use? map or mapPartitions?</li>
 
 <h3>1. What is RDD, parition and node?</h3>
 <h4>definitions</h4>
-RDD(Resilient Distributed Dataset) is an abstraction of distributed data. Although it looks as same as other collection, it consists of multiple partitions that are saved across multiple nodes.  
+RDD(Resilient Distributed Dataset) is an abstraction of distributed data. Although RDD looks as same as other collection, it consists of multiple partitions that are saved across multiple nodes.  
 
 For a RDD, there are multiple partitions, these partitions would be scattered across multiple nodes.  
 Single node can handle multiple partitions(with optimum 2-4 partitions per CPU).  
@@ -34,10 +34,10 @@ number of rdd_1 partitions is: 16
 number of rdd_2 partitions is: 16
 number of rdd_3 partitions is: 10
 ```
-Through results, it is relatively obvious to see the default of number of partitions in current spark is 16 and it is also possible to set a specific number of parttitions.
+Through results, it is relatively obvious to see the default of number of partitions in currently is 16 and it is also possible to set a specific number of parttitions by adding second parameter in method `makeRDD` and `parallelize`.
 <h4>How partition works in Spark?</h4>
-All logics that is to be executed in worker node needs to be serialized into a closure and passed across multiple nodes. 
-In every node, every partition holds a separate memory for the closure. That means if I pass a variable to node, every partition in the node have a copy of the variable that does not sync with each other.
+All logics that is to be executed in worker node needs to be pushed into a closure, serialized and passed across multiple nodes. 
+In every node, every partition holds a separate memory for the closure. That means if I pass a variable to node, every partition in the node have a copy of the variable that <b>DOES NOT</b> sync with each other.
 Program below can certify what stated above:
 ```
 val rdd_1 = sc.makeRDD(1 to 10, 2)
@@ -52,11 +52,11 @@ rdd_2.map(x => {counter += 1; (x, counter)}).collect.foreach{case(x, count) => p
 ```
 result: (1, 1) (2, 1) (3, 1) (4, 1) (5, 1) (6, 1) (7, 1) (8, 1) (9, 1) (10, 1)  
 
-In resutls, counter ranges from 1 to 5 in rdd_1, but only 1 in rdd_2. In rdd_1 10 elements is separated into 2 partitions so counter is incremented  for 5 times, while 10 elements are devided into 10 partitions and every partition only has 1 element. From results it is not difficult to know every partition has a "heap" to do all operations for elements within it.  
-To conclude, more partitions, more space used and more tasks spark execute in the same time period. 
+In resutls, after calculation, counter ranges from 1 to 5 in rdd_1, and only 1 in rdd_2. In rdd_1 10 elements is separated into 2 partitions so counter is incremented for 5 times in every single partition, while 10 elements are devided into 10 partitions and counter is incremented onnce in the partition. From results it is not difficult to know every partition has a "heap" to do all operations that passed by master for elements within it.  
+More partitions, more space used and more tasks spark is able execute in the same time period. 
 
-<h3>2. Which one we should use? map or mapPartitions?</h3>
-We can usually see methods: map and mapPartitions, and basically these 2 methods are different ways handling RDD: first is against every single element in a RDD and second is against partition and treat it as a iterator. Difference between `foreach` and `foreachPartition` is in the same way. (Check _tip2_ to see difference between `foreach` and `map`)  
+<h3>2. Which one should use? map or mapPartitions?</h3>
+There are 2 most common methods used in Spark: map and mapPartitions. Basically these 2 methods are just different ways handling RDD: first is against every single element in a RDD and second is against all RDD elements in a partition and treat it as an iterator. Difference between `foreach` and `foreachPartition` is in the same way. (Check _tip2_ to see difference between `foreach` and `map`)  
 
 If you are sick of my bad English, see the codes below:  
 ```
@@ -75,10 +75,10 @@ rdd_5.collect.foreach(x => print(x + " "))
 Results printed from rdd_4 and rdd_5 are exactly same. In fact, for most of cases, there are not difference between these 2 ways processing RDDs.  
 
 So why we need to use `mapPartitions` and `foreachPartition`?  
-If there is any manipulations where heavy object is required to instantiate, it is better add this logics into partition rather than apply it directly on RDD.
-Let's take an example:
+If there are any operations where heavy objects are required to instantiate, it is better to add this logics into partition rather than apply it directly on RDD, because applying into partition only require to create one object in a partition while `map` will creaet as many objects as number of elements in RDD within the partition.  
+Let's see an example:
 I have a rdd that contains a lot of elements, these elements are held in the different nodes each of elements in the RDD needs to be inserted into a database.  
-In this scenario, if I create a new connection between data and database for every single elements in RDD, there would be millions of connections instantiated, and obviously it is not always a good way doing this. So it maybe better if I create only one connectino for a partition, because number of partitions of RDD can be set by ourselves.  
+In this scenario, if I create a new connection between data and database for every single elements in RDD, there would be millions of connections instantiated if there are a large scale of data in there, and obviously it is not always a good way doing this. So it maybe better if I create only one connectino for a partition, and all elements of RDD in this partition would share the same one.  
 ```
   stream.foreachRDD(rdd => {
         val jsonDF = sqlContext.read.json(rdd)
