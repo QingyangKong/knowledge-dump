@@ -1,4 +1,4 @@
-<h1>Create dynamic web project in eclipse</h1>
+# Create dynamic web project in eclipse
 1 Create a maven project  
 2 Add dependencies
 ```
