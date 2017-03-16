@@ -1,18 +1,18 @@
-#Recursion Optimization in Scala
-###1. Why recursion popular in FP?
+# Recursion Optimization in Scala
+### 1. Why recursion popular in FP?
 As an important feature, recursion is widely used in the functional programming. I think the reason is there is no mutable state in FP and
 recursion allows for the construction of code that doesn’t require setting and maintaining state with local variables.
 For example, it is impossible to maintain a mutable state like a counter for a loop in FP but it is allowed to pass values through parameter without storing state in member varialbe.  
 Another feature of recursion is that side-effect can be avoided easily by writing recursive function. (That does not mean side-effect is a bad thing, but in some scenario we might want to avoid it especially in concurrent computing.) Why easier? Because by using recursion to return a consistent value based on given inputs, no state is needed to recurse except for read-only parameter and write-only return value. In this way no external variable would be changed. 
 
-###2. Dangers of Recursion: Stack Overflow
+### 2. Dangers of Recursion: Stack Overflow
 However, recursive solution for problem is not always safe. When a function is called, a size of memory in stack needs to be allocated. If the function is called too many times, memory in stack will be used up and at this point of time, the most famous exception "stackoverflow" will happen.
-###3. Deal with Exception Stack Overflow
+### 3. Deal with Exception Stack Overflow
 There are 2 ways solving the problem "stackoverflow": one is to write a recursion as a tail recursion and the other is to write function in continuation-passing-style(CPS). In order to take advantage of tail recursion and CPS, the language has to support tail recursion optimization(TRO) and tail call optimization(TCO). As TRO is included in TCO, TRO is supported if the language supports TCO. For functional programming language, TCO is supported but for most of procedural programming language, there is only TRO but no TCO.  
 
-###4. Tail Recurion in Scala
+### 4. Tail Recurion in Scala
 Scala is a combination of functional programming and procedural programming, so I am wondering if Scala does recursion optimization for recursion. In examples below I am going to write imperative way, recursion and tail recursion for Triangular Number and Fibonacci Number to see if Scala supports TRO. 
-####Example 1:
+#### Example 1:
 Triangular Number: any of the series of numbers (1, 3, 6, 10, 15, etc.) obtained by continued summation of the natural numbers 1, 2, 3, 4, 5, etc. Eg: triangularNum(3) = 1 + 2 + 3 = 6; triangularNum(4) = 1 + 2 + 3 + 4 = 10.  
 <i>For-loop:</i>
 
@@ -67,7 +67,7 @@ Results:
 200009999
 ```
 No stack overflow! That means scala does have the feature TRO. If there is nothing needs maintained, stack memory would be freed.
-####Example 2
+#### Example 2
 Fibonacci: every number after the first two is the sum of the two preceding one.  
 eg: Fibonacci sequence: 1, 1, 2, 3, 5, 8, 13, ..... fibonacci(3) = 2 fibonacci(6) = 8  
 <i>For Loop</i>
@@ -124,12 +124,12 @@ Result:
 ```
 Although the result is not correct, this function can be executed as planed without stackoverflow exception. As last example, the fact that no stack overflow in tail recursion indicated that scala supports TRO.
 
-###5. CPS in Scala  
+### 5. CPS in Scala  
 In my understanding, CPS is a way that pass mutable state through an expression that is a lamda expression with only one parameter. When the CPS function is completed it returns by calling continuation function with value as an argument in the continuation function. 
 So in theory, the CPS function does not required much space in stack because space for old stack layer would be freed as soon as possible. But in order to reducing space allocated in stack, language has to support Tail Call Optimization. Let's see if scala has TCO feature.  
 Example 3 and 4 are CPS way to write Triangular Number and FiboNacci function.
 
-Example 3:  
+#### Example 3:  
 <i>Triangular Number in CPS</i>
 ```
 def triangularNumCPS(x: Long, cont: Long => Long): Long = x match{
@@ -146,7 +146,7 @@ Exception in thread "main" java.lang.StackOverflowError
 ```
 Stack overflow happens, that means the TCO is not supported in Scala. So in the Fibonacci function in CPS, the same problem should happen. Let's see the result in example 4.
 
-Example 4:  
+#### Example 4:  
 <i>Fibonacci in CPS</i>
 ```
 def fiboCPS(fib: Long, f: Long => Long): Long = fib match {
@@ -164,7 +164,7 @@ Exception in thread "main" java.lang.StackOverflowError
 ```
 Result is as expected, stack overflows again and the result indicates that TCO is not supported in Scala. Although it is possible to write CPS function in scala, it is not safe to use CPS function beucause actually space in stack is still used in this way.
 
-###6. Tail Recursion Annotation
+### 6. Tail Recursion Annotation
 There is a easy way in scala to verify the recursion is safe or not: `@tailrec`. This annotation to test if the function is a tail recursion and throw compile error if it is not.  
 Be attention, `@tailrec` only verify but would not help to transfer a recursion to tail recursion.
 Example 5:
@@ -187,5 +187,5 @@ def triangularNumTailRec(x: Long, result: Long): Long = x match{
 }
 ```
 When used to annotated a tail-recursion function, there is no error. So the annotation is a siren to warn the danger but is not able to fix the bug.
-###7. Conclusion:
+### 7. Conclusion:
 In Scala, tail recursion optimization is supported but tail call optimization is not, so CPS is no safe in scala.
