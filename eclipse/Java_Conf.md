@@ -33,14 +33,14 @@ For every project, no matter global or specific version of runtime and compiler 
 Default version of java in Maven.
 In maven, there is a plugin called maven-compiler-plugin defining compiler source and target. Default version of this plugin is 1.5 so there is nothing set for the plugin, version of JRE System Library would be set as 1.5 when update project through maven. And then problem like "Java compiler version mismatch".Way to set is add 
 ```
-<plugin>
-	<groupId>org.apache.maven.plugins</groupId>
-	<artifactId>maven-compiler-plugin</artifactId>
-	<version>${versionNumber}</version>
-	<configuration>
-		<source>${sourceVersion}</source>
-		<target>${targetVersion}</target>
-	</configuration>
-</plugin>
+	<plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-compiler-plugin</artifactId>
+		<version>${versionNumber}</version>
+		<configuration>
+			<source>${sourceVersion}</source>
+			<target>${targetVersion}</target>
+		</configuration>
+	</plugin>
 ```
-${versionNumber} can be found in maven available plugins: https://maven.apache.org/plugins/ 
+`${versionNumber}` can be found in maven available plugins: https://maven.apache.org/plugins/ 
