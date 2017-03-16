@@ -57,7 +57,7 @@ result: (1, 1) (2, 1) (3, 1) (4, 1) (5, 1) (6, 1) (7, 1) (8, 1) (9, 1) (10, 1)
 In resutls, after calculation, counter ranges from 1 to 5 in rdd_1, and only 1 in rdd_2. In rdd_1 10 elements is separated into 2 partitions so counter is incremented for 5 times in every single partition, while 10 elements are devided into 10 partitions and counter is incremented onnce in the partition. From results it is not difficult to know every partition has a "heap" to do all operations that passed by master for elements within it.  
 More partitions, more space used and more tasks spark is able execute in the same time period. 
 
-<h3>2. Which one should use? map or mapPartitions?</h3>
+### 2. Which one should use? map or mapPartitions?
 There are 2 most common methods used in Spark: map and mapPartitions. Basically these 2 methods are just different ways handling RDD: first is against every single element in a RDD and second is against all RDD elements in a partition and treat it as an iterator. Difference between `foreach` and `foreachPartition` is in the same way. (Check _tip2_ to see difference between `foreach` and `map`)  
 
 If you are sick of my bad English, see the codes below:  
@@ -99,13 +99,13 @@ In this scenario, if I create a new connection between data and database for eve
   }
  ```
 #### Tip 1
-**Difference between map and foreach:**
+**Difference between map and foreach:**  
 Map is a transformation and will not result in execution of logics within it until when action is summoned. In contrast, Operations in foreach will be executed immediately.  
 So by convention, foreach is used when side-effect is expected while map is used when side effect is not required. Actually map can also do operations with side-effect.  
 Edited stuff from [this stackoverflow website](http://stackoverflow.com/questions/354909/is-there-a-difference-between-foreach-and-map)
 
 #### Tip 2
-**Difference between makeRDD and parallelize:**
+**Difference between makeRDD and parallelize:**  
 there are 2 ways convert a collection to a RDD
 eg: 
 ```
