@@ -6,6 +6,7 @@ content
 Spark, as a distributed framework, save data across multiple nodes in the cluster and the data that saved in this way is called RDD. When any operations are going to be executed on RDD, logics would be passed into multiple nodes at first place.  
 In this secenario, there would be a problem that variables cannot be synced in the logics as I talked in this [article](https://github.com/QingyangKong/knowledge-dump/blob/master/spark/RDD%26Partition.md).  
 Let's take an exmaple from official API:
+
 ```
  scala> val accum = sc.accumulator(0)
  accum: spark.Accumulator[Int] = 0
