@@ -1,5 +1,5 @@
-<h2>Use underscore in SCALA</h2>
-<h3>1. In pattern match</h3>
+# Use underscore in SCALA
+### 1. In pattern match
 In pattetn matching, underscore serves as a wildcard to match everything <b>includes</b> `null`.  
 proof:
 ```
@@ -13,9 +13,9 @@ object underscoreTest {
     println(ss)
   }
 }
-
-result is:1
 ```
+result is 1
+
 And modify the program to this:
 ```
 object underscoreTest {
@@ -28,9 +28,8 @@ object underscoreTest {
   }
 }
 ```
-result is:
-`2`
-<h3>Underscores in anonymous function</h3>
+result is 2
+### Underscores in anonymous function
 The underscore acts as a placeholder in anonymous function and first one is a short form of second one. If there is only on parameter for the function, underscore can even be skipped.
 ```
 val list = List(1, 2, 3, 4)
