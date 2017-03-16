@@ -1,13 +1,13 @@
-##Difference between val and def and introduction to call-by-name parameter
+## Difference between val and def and introduction to call-by-name parameter
 In this file, I am going to talk about the difference between keyword val and def in scala and introduce the use of call-by-name parameter.
-##Context:
+## Context:
 1. what is the difference between keyword "val" and "def"?
 2. what is the use of the call-by-name parameter in method?
 3. what is the use of keyword "lazy"?
 
-###Difference between keyword "val" and "def":
+### Difference between keyword "val" and "def":
 In short, body of val will be evaluated once when the val defined while def is evaluated evvery time it is used.
-####example 1
+#### example 1
 In this example, I will create `v` and `d` by keyword `val` and `def` and see difference between them. I instantiate 2 vals with an expression to print out a string and then return an integer.
 ```
 scala> val v = { print("val initiated\t"); 1 }
@@ -26,7 +26,7 @@ scala> d
 def initiated   res2: Int = 1
 ```
 Expression `print("val initiated\t")` in `v` is not evaluated while expression of `d` is evalauted and that is why string "def initiated" is printed out. This example indicates that def is not evaluated unless it is used while val is evaluated once it is created.  
-####example 2
+#### example 2
 In this example I will assagin `util.Random.nextInt(10)` to val and def and to see if def will be evaluated every time.
 ```
 scala> val randomVal = util.Random.nextInt(10)
@@ -46,9 +46,9 @@ listDef: List[Int] = List(2, 5, 8, 9, 1, 3, 3, 8)
 Reason that elements are different is because expression is evaluated every time the randomDef is used.  
 In conclusion, val is evalauted once when it is created but def is evaluated every time it is used.  
 
-###Use of call-by-name parameter:
+### Use of call-by-name parameter:
 Somtimes we want pass expressions to a method, but expressions (like variable created with keyword def) are evaluated when assigned to parameters of the method. In this scenario, expression would be evaluated even though not used in the method at all. Expression misuse will make program do extra work or cause unexpected side-effect. The aim of call-by-parameter is to avoid `def`s to be evaluated in parameters.
-####example 3
+#### example 3
 ```
 scala> def sayHi(name: String, exp_1: Unit, exp_2: Unit, exp_3: Unit){
      |  name match{
@@ -93,9 +93,9 @@ Hello Frank
 This time I get the right answer. By defining expressions with type `: => Unit`, it can be promised that expressions are only evaluated when they are used. In this example `exp_1`, `exp_2` and `exp_3` are called call-by-name parameter.  
 In conclusion, I am aboe to make sure that "def"s wouldn't be evaluated unless they are used.
 
-###Keyword "lazy"
+### Keyword "lazy"
 keyword lazy is used before "val". If "lazy" is used, the val is evaluated at time when used rather than created, but it is still evaluated only once. That means "lazy val" only evaluated when used and after that this "lazy val" will keep the same and not evaluated again.  
-####example 4
+#### example 4
 ```
 scala> lazy val rand = util.Random.nextInt(10)
 rand: Int = <lazy>
@@ -103,5 +103,5 @@ rand: Int = <lazy>
 scala> List(rand, rand, rand, rand)
 res3: List[Int] = List(1, 1, 1, 1)
 ```
-Data type for rand after creation is <lazy>, so `rand` is not evalauted yet at this time point. When I create List with multiple `rand`, all elements in the list are the same number, that certify that `rand` is only evaluated once.  
+Data type for rand after creation is `lazy`, so `rand` is not evalauted yet at this time point. When I create List with multiple `rand`, all elements in the list are the same number, that certify that `rand` is only evaluated once.  
 From 4 examples above in a very short conclusion, ranking of laziness is `def` > `lazy val` > `val`.
