@@ -2,7 +2,7 @@
 For any java project, 2 things need to be set: java runtime environment and java compiler. I am going to illustrate how to configure these 2 setting in the eclipse IDE in this article.
 
 <h3>1. What is java compiler level?</h3>
-It is version of compiler to compile source codes. Java compiler compliance level can be set in the `window->preference->java->compiler`, and it is used to compile source codes into java classes. Eclipse has its own java compilers. The compiliance level is equal to command "java -source xx".
+It is version of compiler to compile source codes. Java compiler compliance level can be set in the `window->preference->java->compiler` , and it is used to compile source codes into java classes. Eclipse has its own java compilers. The compiliance level is equal to command "java -source xx".
 
 <h3>2. What is installed JRE?</h3>
 In the `window->preference->java->installed JRE`, we are able to choose JRE version to run the java classes. All versions of JREs here should be installed in the environment and eclipse doesn't have it in its own. Java compiler mentioned in last question is used to compile source codes and JRE here is to run the compiled classes. Be attention that version of installed JRE is used to run classes, while Java compiler level is to indicate version of Java compiler to compile source codes. 
@@ -32,6 +32,7 @@ For every project, no matter global or specific version of runtime and compiler 
 <h3>Small Tip for maven:</h3>
 Default version of java in Maven.
 In maven, there is a plugin called maven-compiler-plugin defining compiler source and target. Default version of this plugin is 1.5 so there is nothing set for the plugin, version of JRE System Library would be set as 1.5 when update project through maven. And then problem like "Java compiler version mismatch".Way to set is add 
+
 ```
 	<plugin>
 		<groupId>org.apache.maven.plugins</groupId>
@@ -43,4 +44,5 @@ In maven, there is a plugin called maven-compiler-plugin defining compiler sourc
 		</configuration>
 	</plugin>
 ```
+
 `${versionNumber}` can be found in maven available plugins: https://maven.apache.org/plugins/ 
