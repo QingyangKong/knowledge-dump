@@ -1,4 +1,4 @@
-# Serilization problem
+# Serialization problem
 agenda
 * What is serilization problem and what causes it?
 * Ways preventing the problem.
