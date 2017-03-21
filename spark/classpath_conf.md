@@ -8,16 +8,23 @@
 `spark.driver.extraClassPath` is to set libs that is going to be used by driver node.  
 `spark.executor.extraClassPath` is to set libs that is going to be used by executors.  
 These are how to use them in commands:  
-`--conf "spark.driver.extraClassPath"={path}`  
-`--conf "spark.executor.extraClassPath"={path}`  
+`--conf "spark.driver.extraClassPath={path}"`  
+`--conf "spark.executor.extraClassPath={path}"`  
 For `spark.driver.extraClassPath`, there is an alias `--driver-class-path` that can be used as when submit spark app through command `spark-submit`. 
 
-If the app is running under multiple nodes, these 2 options, in most of cases, should be the same make sure all dependencies can be found by each node in cluster.
-`--jars` will send jar files after the option to multiple nodes and these jar files will not be included into driver ot worker classpath. They still need to be explictly set in the command option.
-
+If the app is running under multiple nodes, these 2 options, in most of cases, should be the same make sure all dependencies can be found by each node in cluster.  
+`--jars` will send jars in a temporary directory that is accessible for all nodes.  
+`--files` so the same thing as `--jars` and the difference is `--file` is used for arbitrary file.  
+Whatever `--jars` and `--files` will not add jars or conf files into class path, so they need to be added into cp explicitly if necessary.  
 See this example:
 
-### 2. Pass through `addJar`
-`sc.addJar` does the same thing as `--jars`. First one is add dependencies in codes while the second one add depdencies in command. The only difference is that priority, passing though codes has higher priority than command.  
-
+### 2. Pass through `addJar` and `addFile`   
+`sc.addJar` does the same thing as `--jars` and `sc.addFile` does the same thing as `--files`. One add dependencies and files in codes while the other one adds depdencies and files in command. The only difference is that priority, passing though codes has higher priority than command.  
+Example to use `sc.addFile`
+```
+sc.addFile("path/to/file.jaas")
+val absolutePath = SparkFiles.get("file.jaas")
+System.setProperty("java.security.auth.login.config", absolutePath)
+```
+Add jaas file for spark app in all nodes. First save it in a temporary dir and then `absolutePath` can be reached by every node in the cluster.
 ### 3. Difference between client and cluster mode
