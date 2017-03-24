@@ -3,28 +3,34 @@
 * Pass through command
 * Pass through `addJar` and `addFile`
 * Difference between client and cluster mode
+* How to use System.setProperty(key, value)
 
 ### 1. Pass through commands
 `spark.driver.extraClassPath` is to set libs that is going to be used by driver node.  
 `spark.executor.extraClassPath` is to set libs that is going to be used by executors.  
+
 These are how to use them in commands:  
 `--conf "spark.driver.extraClassPath={path}"`  
 `--conf "spark.executor.extraClassPath={path}"`  
-For `spark.driver.extraClassPath`, there is an alias `--driver-class-path` that can be used as when submit spark app through command `spark-submit`. 
+For `spark.driver.extraClassPath`, there is an alias `--driver-class-path` that can be used as when submit spark app through command `spark-submit`. If there are multiple files added, make sure they are separated by colon. 
 
-If the app is running under multiple nodes, these 2 options, in most of cases, should be the same make sure all dependencies can be found by each node in cluster.  
-`--jars` will send jars in a temporary directory that is accessible for all nodes.  
-`--files` so the same thing as `--jars` and the difference is `--file` is used for arbitrary file.  
-Whatever `--jars` and `--files` will not add jars or conf files into class path, so they need to be added into cp explicitly if necessary.  
-See this example:
+`--jars {path}` is to distribute jar files across nodes and add them to driver and executor classpath.  
+Neither driver extra classpath nor executor extra classpath is able to add jars from driver node to executors. In real spark job, it is common that third-party jar files are required in tasks. If the spark job is run in a cluster, jars need to be reachable by nodes containing executors. In this scenario, `--jars` can be used to distribut jar files into nodes in cluster and add them into driver and executor classpath.  
+
+`--files {path}` is similar as `--jars {path}`, and it is to distribute arbitrary file in spark cluster.  
+The way to use files passed by `--files {path}` is shown below:  
+Submit spark job in this way: `spark-submit --class path/to/fileName --files path/tofile job.jar`  
+
+```
+val filePath = SparkFile.get("fileName")
+val result = doSthWithFile(filePath)
+
+def doSthWithFile(path: String):Int = {
+  ....
+}
+```
+method `SparkFile()` cannot be used before SparkContext setup, or NullPointer exception would be raised.
 
 ### 2. Pass through `addJar` and `addFile`   
-`sc.addJar` does the same thing as `--jars` and `sc.addFile` does the same thing as `--files`. One add dependencies and files in codes while the other one adds depdencies and files in command. The only difference is that priority, passing though codes has higher priority than command.  
-Example to use `sc.addFile`
-```
-sc.addFile("path/to/file.jaas")
-val absolutePath = SparkFiles.get("file.jaas")
-System.setProperty("java.security.auth.login.config", absolutePath)
-```
-Add jaas file for spark app in all nodes. First save it in a temporary dir and then `absolutePath` can be reached by every node in the cluster.
 ### 3. Difference between client and cluster mode
+### 4. How to use System.setProperty()
