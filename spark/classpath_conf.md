@@ -31,6 +31,81 @@ def doSthWithFile(path: String):Int = {
 ```
 method `SparkFile()` cannot be used before SparkContext setup, or NullPointer exception would be raised.
 
-### 2. Pass through `addJar` and `addFile`   
+### 2. Pass through `addJar` and `addFile`   
+Methods `SparkContext.addJar` and `SparkContext.addFile` do the thing pretty much like option `--jars` and `--files`. There are 2 differences:  
+First is that `addJar` won't add jar files into driver's classpath. What `addJar` does is to distribute jar files across multiple worker nodes and driver node class path does not change.
+See example below:  
+Create a simple class and package it into a jar file
+```
+package utils;
+
+public class Calculator {
+	
+	public int addOne(int i){
+		return i + 1;
+	}
+	public int addTwo(int i){
+		return i + 2;
+	}
+}
+```
+Then use class Calculator in Spark job
+```
+object TestDependencies {
+  def main(args:Array[String]): Unit = {
+    val sparkConf = new SparkConf()
+    val sc = new SparkContext(sparkConf)
+
+    sc.addJar("file:/absolute/path/to/utils.jar")
+        
+    val data = 1 to 10 toList
+    val rdd = sc.makeRDD(data)
+    
+    val rdd_1 = rdd.map ( x => {
+      val myCalculator = new Calculator
+      myCalculator.addOne(x)
+    })
+    
+    rdd_1.collect().foreach { x => print(x + "||") }
+  }
+}
+```
+Run the spark job in yarn-client mode by command `spark-submit --class TestDependencies --verbose --master yarn --deploy-mode client sparkTest-0.0.1-SNAPSHOT.jar`, we can get the correct answer: `2||3||4||5||6||7||8||9||10||11||`  
+But if I add several lines like this:
+```
+object TestDependencies {
+  def main(args:Array[String]): Unit = {
+    val sparkConf = new SparkConf()
+    val sc = new SparkContext(sparkConf)
+
+    sc.addJar("file:/absolute/path/to/utils.jar")
+    
+    val l = List(1, 2, 3, 4, 5)
+    val l_1 = l.map { x => {
+        val myCalculator = new Calculator
+        myCalculator.addOne(x)
+      }
+    }
+    println(l_1)
+    
+    val data = 1 to 10 toList
+    val rdd = sc.makeRDD(data)
+    
+    val rdd_1 = rdd.map ( x => {
+      val myCalculator = new Calculator
+      myCalculator.addOne(x)
+    })
+    
+    rdd_1.collect().foreach { x => print(x + "||") }
+  }
+}
+```
+This time I try to use class Calculator in driver mode rather on RDD that sits on executors, but I get the error "Exception in thread "main" java.lang.NoClassDefFoundError: utils/Calculator". That is because the jar file is not added into driver's classpath. Though test above it can be certified that `addJar` only add jars into executors' classpath rather than driver's.
+
+There is another thing to be attention is if spark job is submitted in local mode, spark will use driver classpath even if for manipulatiosn in RDD that should saved in executors because there is only one node in local mode. If `addJar` is used in the local mode, jar files cannot be found as jar files cannot be added into driver's class path.
+
+The second difference is `--jars` and `--file` will distribute jars and files from client node rather than drive node, while `addJar` and `addFile` distribute resources from driver node. There must be a main method in a spark job, the node where main method run is called driver node. The node where the spark job is submitted us called client node.  
+Usually the driver and client node is the same node, but in yarn cluster mode, they are not the same. In this mode, `addJar()` cannot find the resource because it is running on driver node but resource is usually saved in client node. To solve this problem, add jars in driver node or use `--jars` to distribute resources from client node.
+
 ### 3. Difference between client and cluster mode
 ### 4. How to use System.setProperty()
