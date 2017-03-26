@@ -71,7 +71,8 @@ object TestDependencies {
 }
 ```
 Run the spark job in yarn-client mode by command `spark-submit --class TestDependencies --verbose --master yarn --deploy-mode client sparkTest-0.0.1-SNAPSHOT.jar`, we can get the correct answer: `2||3||4||5||6||7||8||9||10||11||`  
-But if I add several lines like this:
+
+But if I attempt to use the class in driver node, it won't work, see example below:
 ```
 object TestDependencies {
   def main(args:Array[String]): Unit = {
@@ -100,12 +101,19 @@ object TestDependencies {
   }
 }
 ```
-This time I try to use class Calculator in driver mode rather on RDD that sits on executors, but I get the error "Exception in thread "main" java.lang.NoClassDefFoundError: utils/Calculator". That is because the jar file is not added into driver's classpath. Though test above it can be certified that `addJar` only add jars into executors' classpath rather than driver's.
+When I try class Calculator in driver mode rather RDD that sits in executors, I get the error "Exception in thread "main" java.lang.NoClassDefFoundError: utils/Calculator". That is because the jar file is not added into driver's classpath. Through test above it can be certified that `addJar` only add jars into executors' classpath rather than driver's.  
 
-There is another thing to be attention is if spark job is submitted in local mode, spark will use driver classpath even if for manipulatiosn in RDD that should saved in executors because there is only one node in local mode. If `addJar` is used in the local mode, jar files cannot be found as jar files cannot be added into driver's class path.
+There is another thing to be noticed is if spark job is submitted in local mode, spark will use driver classpath even if for manipulatiosn in RDD that should saved in executors because there is only one node in local mode. If `addJar` is used in the local mode, jar files cannot be found as they are added into executors' class path.  
 
-The second difference is `--jars` and `--file` will distribute jars and files from client node rather than drive node, while `addJar` and `addFile` distribute resources from driver node. There must be a main method in a spark job, the node where main method run is called driver node. The node where the spark job is submitted us called client node.  
+The second difference is `--jars` and `--file` will distribute jars and files from client node rather than drive node, while `addJar` and `addFile` distribute resources from driver node.  
+What is client node? There must be a main method in a spark job, the node where main method run is called driver node. The node where the spark job is submitted us called client node.   
 Usually the driver and client node is the same node, but in yarn cluster mode, they are not the same. In this mode, `addJar()` cannot find the resource because it is running on driver node but resource is usually saved in client node. To solve this problem, add jars in driver node or use `--jars` to distribute resources from client node.
 
 ### 3. Difference between client and cluster mode
+For client mode, driver program is run in the node where you submit the Spark job, while driver program will be run in the any node that resource manager found in the cluster for cluster mode. This is the biggest difference between client mode and cluster mode.  
+In client mode, result can be seen in teh console so spark job is easier to debug. Client mode also gives developer full control where the driver node is running.  
+In clusetr mode, it is easier to allocate resources and always used for production.  
+
 ### 4. How to use System.setProperty()
+System.setProperty is used when some parameters need to be submitted at the time JVM is created in the host. For exmaple, if any service is using Kerberos to authenticate, when spark attempts to use it, the option `java.security.auth.login.config` needs to be used.  
+It should be used like `System.setProperty("java.security.auth.login.config", "/path/to/jaas/file")`. One ting to attention is that `System.setProperty` is executed before files get distributed, so the method cannot use the file that is added by `--files` or `sparkContext.addFile({path})`.
