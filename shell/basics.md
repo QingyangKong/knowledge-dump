@@ -43,3 +43,37 @@ done
 ```
 Use while to iterate all params and case clause to get the specific param that is wanted.  
 execute shell by command `./test.sh 1 2 paramIWant` and get the result `paramIWant`.
+#### 3.1 get all parameters in in shell
+method 1: use do-while and if clause
+```
+param1=""
+param2=""
+while (( "$#" )); do
+    if [ "$1" == "--param1"]; then
+        shift
+        param1="$1"
+    elif [ "$1" == "--param2"]; then
+        shift
+        param2="$1"
+    fi
+shift
+done
+```
+method 2: use do-while and case clause
+```
+param1=""
+param2=""
+while (( "$#" )); do
+    case in ("--param1")
+      shift
+      param1="$1"
+      ;;
+    esac
+    case in ("--param2")
+      shift
+      param2="$1"
+      ;;
+    esca
+    shift
+done
+```
