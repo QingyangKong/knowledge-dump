@@ -1,4 +1,10 @@
-#### 1. execute file directly or using `source`
+#### 1. variable and command substitution
+$() to quote commands  
+${} to quote varaible  
+They are be nested
+back tide can be also used but that is the old style.  
+
+#### 2. execute file directly or using `source`
 In nutshell, `source` executes file in current file. Executing file directly creates a new shell.
 Exmaple:  
 create a.sh as below:
@@ -19,7 +25,7 @@ echo $CP
 a is executed in a new shell and `$CP` cannot be defined in current shell, so result is empty. dot is the same as `source`. `source /path/a.sh` can also be written as `. /path/a.sh`.  
 Usually `source` is used to load environment vars before executing the a shell. dot has a better compatibility than `source`.  
 
-#### 2. get the path of current path
+#### 3. get the path of current path
 use command `dirname`
 Usually a shell want to have path of itself because the shell is going to be used in the following.  
 example:
@@ -37,7 +43,7 @@ pwd
 ```
 Use array `BASH_SOURCE` to get the file name, change to the dir where the file saved and then `pwd`.  
 
-#### 3. get the specific parameter of shell
+#### 4. get the specific parameter of shell
 ```
 while (( "$#" )); do
 case $1 in
@@ -50,7 +56,7 @@ done
 ```
 Use while to iterate all params and case clause to get the specific param that is wanted.  
 execute shell by command `./test.sh 1 2 paramIWant` and get the result `paramIWant`.
-#### 3.1 get all parameters in in shell
+#### 5. get all parameters in in shell
 method 1: use do-while and if clause
 ```
 param1=""
