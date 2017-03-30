@@ -19,7 +19,7 @@ echo $CP
 a is executed in a new shell and `$CP` cannot be defined in current shell, so result is empty. dot is the same as `source`. `source /path/a.sh` can also be written as `. /path/a.sh`.  
 Usually `source` is used to load environment vars before executing the a shell. dot has a better compatibility than `source`.  
 
-#### 2. get the path of current file
+#### 2. get the path of current path
 use command `dirname`
 Usually a shell want to have path of itself because the shell is going to be used in the following.  
 example:
@@ -29,6 +29,13 @@ sbin="`cd "$sbin"; pwd`"
 echo "$sbin"
 ```
 $0 is the file name when the shell is executed.
+```
+FileName=${BASH_SOURCE[0]}
+path=$(dirname "$FileName")
+cd "$path"
+pwd
+```
+Use array `BASH_SOURCE` to get the file name, change to the dir where the file saved and then `pwd`.  
 
 #### 3. get the specific parameter of shell
 ```
