@@ -26,7 +26,7 @@ a is executed in a new shell and `$CP` cannot be defined in current shell, so re
 Usually `source` is used to load environment vars before executing the a shell. dot has a better compatibility than `source`.  
 
 #### 3. get the path of current path
-use command `dirname` to get the directory name of the file and then use cd and pwd to get the current directory path.
+3.1 get the current directory path: use command `dirname` to get the directory name of the file and then use cd and pwd to get the current directory path.
 ```
 sbin="`dirname "$0"`"
 sbin="`cd "$sbin"; pwd`"
@@ -34,7 +34,7 @@ echo "$sbin"
 ```
 $0 is the file name when the shell is executed.  
 
-Use array `BASH_SOURCE` to get the file name, combine with directory path and get the absolute path to the file.  
+3.2 get the current file path: Use array `BASH_SOURCE` to get the file name, combine with directory path and get the absolute path to the file.  
 `basename` is to get the file name without any prefix.
 ```
 this=${BASH_SOURCE[0]}
