@@ -49,13 +49,13 @@ echo $filepath
 Sometimes, the shell file is just a soft link create by command: `ln -s path/to/original/file path/to/link/file`. In this condition, if the original path is expected to get. Option `P` should be used.  
 ```
 this="${BASH_SOURCE:-0}"
-fileName="$(basename "${this}")"
+fileName="$(basename -- "${this}")"
 dirName="$(dirname -- "${this}")"
-dirpath="$(cd -P "${dirName}"; pwd -P)"
+dirpath="$(cd -P -- "${dirName}"; pwd -P)"
 filePath="$dirpath/$fileName"
 echo $filepath
 ```
-When execute the shell in soft link, absolute path of the file will be fetched `-P` means physical.  
+When execute the shell in soft link, absolute path of the file will be fetched `-P` means physical. Double dash `--` means the end of the command options, and after the `--` only positional parameters are accepted.
 
 #### 4. get the specific parameter of shell
 ```
