@@ -1,10 +1,10 @@
-#### 1. variable and command substitution
+## 1. variable and command substitution
 $() to quote commands  
 ${} to quote varaible  
 They are be nested
 back tide can be also used but that is the old style.  
 
-#### 2. execute file directly or using `source`
+## 2. execute file directly or using `source`
 In nutshell, `source` executes file in current file. Executing file directly creates a new shell.
 Exmaple:  
 create a.sh as below:
@@ -25,8 +25,9 @@ echo $CP
 a is executed in a new shell and `$CP` cannot be defined in current shell, so result is empty. dot is the same as `source`. `source /path/a.sh` can also be written as `. /path/a.sh`.  
 Usually `source` is used to load environment vars before executing the a shell. dot has a better compatibility than `source`.  
 
-#### 3. get the path of current path
-3.1 get the current directory path: use command `dirname` to get the directory name of the file and then use cd and pwd to get the current directory path.
+## 3. get the path of current path
+#### 3.1 get the current directory path: 
+use command `dirname` to get the directory name of the file and then use cd and pwd to get the current directory path.
 ```
 sbin="`dirname "$0"`"
 sbin="`cd "$sbin"; pwd`"
@@ -34,7 +35,8 @@ echo "$sbin"
 ```
 $0 is the file name when the shell is executed.  
 
-3.2 get the current file path: Use array `BASH_SOURCE` to get the file name, combine with directory path and get the absolute path to the file.  
+#### 3.2 get the current file path: 
+Use array `BASH_SOURCE` to get the file name, combine with directory path and get the absolute path to the file.  
 `basename` is to get the file name without any prefix.
 ```
 this=${BASH_SOURCE[0]}
@@ -43,6 +45,17 @@ dirpath="$(cd "$(dirname "$this")"; pwd)"
 filePath="$dirpath/$fileName"
 echo $filepath
 ```  
+#### 3.3 in case of the file is a soft link
+Sometimes, the shell file is just a soft link create by command: `ln -s path/to/original/file path/to/link/file`. In this condition, if the original path is expected to get. Option `P` should be used.  
+```
+this="${BASH_SOURCE:-0}"
+fileName="$(basename "${this}")"
+dirName="$(dirname -- "${this}")"
+dirpath="$(cd -P "${dirName}"; pwd -P)"
+filePath="$dirpath/$fileName"
+echo $filepath
+```
+When execute the shell in soft link, absolute path of the file will be fetched `-P` means physical.  
 
 #### 4. get the specific parameter of shell
 ```
