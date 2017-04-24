@@ -13,6 +13,13 @@
     <div style="border: solid black; width: 10em; height: 10em">
         <span style="font-size: 30px">font in the second div</span>
     </div>
+    
+    <div style="font-size: 10px">
+        <span style="font-size: 10em">font_size_1</span>
+        <div style="font-size: 15px">
+            <span style="font-size: 10em">font_size_2</span>
+        </div>
+    </div>
 </html>
 ```
 
@@ -25,4 +32,7 @@ Because the font-size in the parent docuemnt is set as 10px, 1em is 10px. Width 
 ### question 3: what is width and height of third `<div>`?  
 Becasuse font-size is defined in child DOM of the thrid div, width and height is still 160px and 160px.
 
-Advantage of using 'em' is that the size of element can be adjusted based on the document font size.
+### question 3: what is font size of `font_size_1` and `font_size_2`?
+Same as `div`, font-size is decided by parent DOM font-size and em, so the `font_size_1` is 100px and `font_size_2` is 150px.
+
+### Using 'em' is able to make size of element can be adjusted by parent document font size, while it is not always good for DOM element that needs to be set specifically.
