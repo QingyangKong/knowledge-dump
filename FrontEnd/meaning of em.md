@@ -32,7 +32,7 @@ Because the font-size in the parent docuemnt is set as 10px, 1em is 10px. Width 
 ### question 3: what is width and height of third `<div>`?  
 Becasuse font-size is defined in child DOM of the thrid div, width and height is still 160px and 160px.
 
-### question 3: what is font size of `font_size_1` and `font_size_2`?
+### question 4: what is font size of `font_size_1` and `font_size_2`?
 Same as `div`, font-size is decided by parent DOM font-size and em, so the `font_size_1` is 100px and `font_size_2` is 150px.
 
 ### Using 'em' is able to make size of element can be adjusted by parent document font size, while it is not always good for DOM element that needs to be set specifically.
