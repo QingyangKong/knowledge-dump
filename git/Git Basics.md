@@ -19,14 +19,12 @@ A change must be added into stage first and then committed into the Git reposito
 #### 2.1 Make a working directory a git repo
 `mkdir GitTestDir`  
 `git init`  
-There is a foler `.git` created in working directory, and from now on we can use git for version control.
+There is a foler `.git` created in working directory, git is able to be used to do version control from now on.  
 
 #### 2.2 Check status
-This command is to check that status of the git repository  
 `git status`  
-
+This command is to check that status of the git repository  
 ```
-$ git status
 On branch master
 
 Initial commit
@@ -90,6 +88,7 @@ Changes not staged for commit:
         modified:   firstFile.txt
 ```
 New modifications are not automatically added into the stage, this change is under `Changes not staged for commit:` which means this file is not going to be committed in next commit.  
+
 #### 2.4 Commit files
 git commit file -m {comment}  
 `git add firstFile.txt`  
