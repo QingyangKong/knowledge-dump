@@ -176,7 +176,21 @@ This is used to get new changes in remtoe github repository and push to the loca
 #### 2.11 Fetch and merge files from repository
 `git remote add origin 'https://github.com/QingyangKong/knowledge-dump.git'`  
 `git status`    
+```
+remote: Counting objects: 4, done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 4 (delta 2), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (4/4), done.
+From https://github.com/QingyangKong/knowledge-dump
+   ef5e0e8..1a3d5ed  master     -> origin/master
+```
 `git merge`  
+```
+Updating ef5e0e8..1a3d5ed
+Fast-forward
+ git/Git Basics.md | 18 +++---------------
+ 1 file changed, 3 insertions(+), 15 deletions(-)
+```
 
 ### 3. .gitignore file
 Usually when we debug a project, there will be a lot of configuration file, dependencies, and temporary files including log information, debug files. We do not always want to commit these files into repository, because conf should not be exposed, dependencies can be downloaded by other developer in their environment.
