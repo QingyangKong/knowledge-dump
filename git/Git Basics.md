@@ -173,22 +173,10 @@ This is used when a user copies an existing project in github to local. Remote i
 `git status`  
 This is used to get new changes in remtoe github repository and push to the local repo.
 
-#### 2.11 Fetch files from repository
+#### 2.11 Fetch and merge files from repository
 `git remote add origin 'https://github.com/QingyangKong/knowledge-dump.git'`  
-`git status`  
-`git commit -m 'some change'`  
-```
-On branch master
-
-Initial commit
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-
-        knowledge-dump/
-
-nothing added to commit but untracked files present (use "git add" to track)
-```
+`git status`    
+`git merge`  
 
 ### 3. .gitignore file
 Usually when we debug a project, there will be a lot of configuration file, dependencies, and temporary files including log information, debug files. We do not always want to commit these files into repository, because conf should not be exposed, dependencies can be downloaded by other developer in their environment.
