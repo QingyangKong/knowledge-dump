@@ -217,6 +217,11 @@ Fast-forward
  1 file changed, 3 insertions(+), 15 deletions(-)
 ```
 The difference between `git pull` is that `git fetch` only get all changes in remote repo and do not merge it into local. User must run `git merge` to merge all changes into local. In simple, `git pull` = `git fetch` + `git merge`.
+#### 2.12 push files into remote repo
+`git push -u origin master`  
+`git push`  
+This is used to push all new changes into a remote repo in github. `-u` is upstream to set a upstream, and it is not required to be set every time. `git push` can be use without parameters.  
+
 
 ### 3. .gitignore file
 Usually when we debug a project, there will be a lot of configuration file, dependencies, and temporary files including log information, debug files. We do not always want to commit these files into repository, because conf should not be exposed, dependencies can be downloaded by other developer in their environment.
@@ -237,15 +242,3 @@ If the files already in git cache, they won't be removed after you change ignore
 `git commit -m 'make .gitignore working'` commit changes into cache.  
 
 If all files in a directory are set as ignored in the .gitignore, this directory will be ignored. Git will not add an empty directory.  
-
-
-### Commit local changes to github
-##### 1. pull changes from github (because some may changes files and your local one is not lastest. AKA: non-fast-forward error)
-##### 2. merge changes into the local one.
-`git pull origin master`
-##### 3. Add files into local project
-`git add {files}`
-##### 4. Commit in local one
-`git commit -m 'comment'`
-##### 5. Push into remote
-`git push -u origin master`
