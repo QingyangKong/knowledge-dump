@@ -147,11 +147,29 @@ This change is committed and deleted from stage, and `firstFile.txt` becomes an 
 `git remote add origin {url of repository}`  
 `git push origin master`  
 Add and commit everything into git repository and commit in. Define remote repository to push the repo. Push the all files to remote repository in master branch.  
+#### 2.8 Add or remove a remote repo
+`git remote -v`  
+```
+origin  https://github.com/QingyangKong/knowledge-dump.git (fetch)
+origin  https://github.com/QingyangKong/knowledge-dump.git (push)
+```
+`git remote add fake_repo 'fake url'`  
+`git remote`  
+```
+fake_repo       fake url (fetch)
+fake_repo       fake url (push)
+origin  https://github.com/QingyangKong/knowledge-dump.git (fetch)
+origin  https://github.com/QingyangKong/knowledge-dump.git (push)
+```
+First show the current remtoe repos. Add an another repo and then check again. `-v` means verbose.
 
 #### 2.8 Clone a project from github 
+`git clone {url}`  
+This is used when a user copies an existing project in github to local.  
 
 #### 2.9 Pull files from remtoe repository
-
+`git pull origin master`  
+This is used to get new changes in remtoe github repository and push to the local repo.
 
 ### 3. .gitignore file
 Usually when we debug a project, there will be a lot of configuration file, dependencies, and temporary files including log information, debug files. We do not always want to commit these files into repository, because conf should not be exposed, dependencies can be downloaded by other developer in their environment.
