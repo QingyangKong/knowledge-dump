@@ -23,7 +23,6 @@ There is a foler `.git` created in working directory, git is able to be used to 
 
 #### 2.2 Check status
 `git status`  
-This command is to check that status of the git repository  
 ```
 On branch master
 
@@ -31,13 +30,11 @@ Initial commit
 
 nothing to commit (create/copy files and use "git add" to track)
 ```  
-Because there is nothing in working directory, it shows "nothing to commit" for now.  
+This command is to check that status of the git repository. Because there is nothing in working directory, it shows "nothing to commit" for now.  
 
 #### 2.3 Add a file into tracked
 `vim firstFile.txt`  
 `git status`  
-Create a text file in working directory, and check current status. 
-Result:  
 ```
 On branch master
 
@@ -50,12 +47,11 @@ Untracked files:
 
 nothing added to commit but untracked files present (use "git add" to track)
 ```  
-This new added file is detected but not added into stage yet, so it shows `nothing added to commit but untracked files present` which means this file cannot be committed.  
+Create a text file in working directory, and check current status.  
+This new added file is detected but not added into stage yet, so it shows `nothing added to commit but untracked files present` which means this file won't be committed.  
 
-Use `git add {file}` to add the to stage  
 `git add firstFile.txt`  
 `git status`  
-Add this file into stage and check git status again:
 ```
 On branch master
 
@@ -66,11 +62,11 @@ Changes to be committed:
 
         new file:   firstFile.txt
 ```
+Add `firstFile.txt` into stage and check git status again.  
 Because this file has already been added into stage, it shows under "Changes to be committed" which means the file can be committed now.   
-What if I make another change for this file 
+
 `vim firstFile.txt`  
 `git status`  
-modify the file firstFile and then ccheck status again result is like this:
 ```
 On branch master
 
@@ -87,6 +83,7 @@ Changes not staged for commit:
 
         modified:   firstFile.txt
 ```
+modify the file firstFilat this time point and then ccheck status again.  
 New modifications are not automatically added into the stage, this change is under `Changes not staged for commit:` which means this file is not going to be committed in next commit.  
 
 #### 2.4 Commit files
