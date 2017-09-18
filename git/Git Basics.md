@@ -88,15 +88,14 @@ New modifications are not automatically added into the stage, this change is und
 <br>  
   
 #### 2.4 Commit files
-git commit file -m {comment}  
 `git add firstFile.txt`  
 `git commit firstFile.txt -m 'check in the first file'`  
-I added new change in firstFile into stage and then commit the change.  
-`git status` shows:  
+`git status`  
 ```
 On branch master
 nothing to commit, working directory clean
 ```
+Add a new change(firstFile) into stage and then commit it.  
 `working directory clean` means no change detected in working directory and nothing in stage. 
 
 #### 2.5 Check current files in Git repo
@@ -109,11 +108,8 @@ When use command `ls`, files shown are just files in working directory but not i
 To check files in git repo, use `git ls-tree {branch name}`
 
 #### 2.6 Untrack files in git repo
-If I don't want file `firstFile.txt` to be exposed to others, I can delete it from my git repo and never track changes happens in the files.  
-First I need to remove it from my git repo and then commit this change into repo.  
 `git rm --cache  firstFile.txt`  
 `git status`  
-result is:
 ```
 On branch master
 Changes to be committed:
@@ -127,7 +123,10 @@ Untracked files:
         firstFile.txt
 
 ```
+If I don't want file `firstFile.txt` to be exposed to others, I can delete it from my git repo and stop tracking the file anymore.  
+First I need to remove it from my git repo and then commit this change into repo.  
 This delete change is already pushed to stage and file is untracked, but if I don't want to see the file in git repo, I need to commit this change.  
+<br>  
 `git commit -m 'delete firstFile'`  
 `git status`  
 ```
@@ -139,20 +138,19 @@ Untracked files:
 
 nothing added to commit but untracked files present (use "git add" to track)
 ```
-This change is committed and not in stage anymore, it becomes an untracked file.  
-When I execute `git ls-tree master`, nothing shown.
+This change is committed and deleted from stage, and `firstFile.txt` becomes an untracked file.  If I do `git ls-tree master`, nothing shown.
 
 
 #### 2.7 Make a project a git repo and publish in github  
 `git add .`  
 `git commit -m 'project setup'`  
 `git remote add origin {url of repository}`  
-`git push`  
-
+`git push origin master`  
+Add and commit everything into git repository and commit in. Define remote repository to push the repo. Push the all files to remote repository in master branch.  
 
 #### 2.8 Clone a project from github 
 
-
+#### 2.9 Pull files from remtoe repository
 
 
 ### 3. .gitignore file
