@@ -163,11 +163,11 @@ origin  https://github.com/QingyangKong/knowledge-dump.git (push)
 ```
 First show the current remtoe repos. Add an another repo and then check again. `-v` means verbose.
 
-#### 2.8 Clone a project from github 
+#### 2.9 Clone a project from github 
 `git clone {url}`  
-This is used when a user copies an existing project in github to local.  
+This is used when a user copies an existing project in github to local. Remote is not required to be set when using `git clone`.  
 
-#### 2.9 Pull files from remtoe repository
+#### 2.10 Pull files from remtoe repository
 `git pull origin master`  
 This is used to get new changes in remtoe github repository and push to the local repo.
 
