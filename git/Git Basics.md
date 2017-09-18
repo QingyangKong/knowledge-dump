@@ -185,7 +185,12 @@ From https://github.com/QingyangKong/knowledge-dump
    ef5e0e8..1a3d5ed  master     -> origin/master
 ```
 `git status`  
-
+```
+On branch master
+Your branch is behind 'origin/master' by 2 commits, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+nothing to commit, working directory clean
+```
 `git merge`  
 ```
 Updating ef5e0e8..1a3d5ed
