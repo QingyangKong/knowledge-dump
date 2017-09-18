@@ -49,7 +49,7 @@ nothing added to commit but untracked files present (use "git add" to track)
 ```  
 Create a text file in working directory, and check current status.  
 This new added file is detected but not added into stage yet, so it shows `nothing added to commit but untracked files present` which means this file won't be committed.  
-
+<br>  
 `git add firstFile.txt`  
 `git status`  
 ```
@@ -63,8 +63,8 @@ Changes to be committed:
         new file:   firstFile.txt
 ```
 Add `firstFile.txt` into stage and check git status again.  
-Because this file has already been added into stage, it shows under "Changes to be committed" which means the file can be committed now.   
-
+Because this file has already been added into stage, it shows under "Changes to be committed" which means the file can be committed now.  
+<br>  
 `vim firstFile.txt`  
 `git status`  
 ```
@@ -85,7 +85,8 @@ Changes not staged for commit:
 ```
 modify the file firstFilat this time point and then ccheck status again.  
 New modifications are not automatically added into the stage, this change is under `Changes not staged for commit:` which means this file is not going to be committed in next commit.  
-
+<br>  
+  
 #### 2.4 Commit files
 git commit file -m {comment}  
 `git add firstFile.txt`  
