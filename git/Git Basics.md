@@ -174,8 +174,8 @@ This is used when a user copies an existing project in github to local. Remote i
 This is used to get new changes in remtoe github repository and push to the local repo.
 
 #### 2.11 Fetch and merge files from repository
-`git remote add origin 'https://github.com/QingyangKong/knowledge-dump.git'`  
-`git status`    
+`git remote add origin 'https://github.com/QingyangKong/knowledge-dump.git'`      
+`git fetch`  
 ```
 remote: Counting objects: 4, done.
 remote: Compressing objects: 100% (3/3), done.
@@ -184,6 +184,8 @@ Unpacking objects: 100% (4/4), done.
 From https://github.com/QingyangKong/knowledge-dump
    ef5e0e8..1a3d5ed  master     -> origin/master
 ```
+`git status`  
+
 `git merge`  
 ```
 Updating ef5e0e8..1a3d5ed
