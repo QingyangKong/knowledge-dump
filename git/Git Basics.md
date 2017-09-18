@@ -168,10 +168,28 @@ First show the current remtoe repos. Add an another repo and then check again. `
 This is used when a user copies an existing project in github to local. Remote is not required to be set when using `git clone`.  
 
 #### 2.10 Pull files from remtoe repository
-`git remote add origin ''https://github.com/QingyangKong/knowledge-dump.git''`
+`git remote add origin 'https://github.com/QingyangKong/knowledge-dump.git'`  
 `git pull origin master`  
+```
+remote: Counting objects: 4, done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 4 (delta 2), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (4/4), done.
+From https://github.com/QingyangKong/knowledge-dump
+ * branch            master     -> FETCH_HEAD
+   d015714..66ab6fe  master     -> origin/master
+Updating 1a3d5ed..66ab6fe
+Fast-forward
+ git/Git Basics.md | 25 +++++++++++++++++++++++--
+ 1 file changed, 23 insertions(+), 2 deletions(-)
+```
 `git status`  
-This is used to get new changes in remtoe github repository and push to the local repo.
+```
+On branch master
+Your branch is up-to-date with 'origin/master'.
+nothing to commit, working directory clean
+```
+This is used to get new changes in remtoe github repository and marge it with the local repo.
 
 #### 2.11 Fetch and merge files from repository
 `git remote add origin 'https://github.com/QingyangKong/knowledge-dump.git'`      
@@ -198,6 +216,7 @@ Fast-forward
  git/Git Basics.md | 18 +++---------------
  1 file changed, 3 insertions(+), 15 deletions(-)
 ```
+The difference between `git pull` is that `git fetch` only get all changes in remote repo and do not merge it into local. User must run `git merge` to merge all changes into local. In simple, `git pull` = `git fetch` + `git merge`.
 
 ### 3. .gitignore file
 Usually when we debug a project, there will be a lot of configuration file, dependencies, and temporary files including log information, debug files. We do not always want to commit these files into repository, because conf should not be exposed, dependencies can be downloaded by other developer in their environment.
