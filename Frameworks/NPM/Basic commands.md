@@ -1,4 +1,7 @@
 ## basic commands
+### what is NPM
+NPM(node package manager) is a node project to manage all published node packages, and NPM also installed with Node as well. NPM can be used to download, remove and publish all packages based on Node.js in repositories.   
+
 ### npm init
 `npm init`  
 ```
