@@ -34,7 +34,10 @@ private static void UpdateByEntry()
 }
 ```
 Create an entry and then decide which property needs to be updated by marking it as modified.   
-The reason se EntityState for the entry as `Unchanged` is to make the entry tracked by entityframework. State of the entry is `Detached` if they are not tracked and there is no way changing state of property when the whole entity's state is `Detached`.  
+
+The reason se EntityState for the entry as `Unchanged` is to make the entry tracked by entityframework. State of the entry is `Detached` if they are not tracked and there is no way changing state of property when the whole entity's state is `Detached`.   
+
+For 2 methods above to update, the very first thing is to make the property supposed to be changed be tracked by context. First method accomplish this by using `attach` and second method does this by setting `state` of entry as `unchanged`.    
 
 To set the whole entity as `Unchanged` and set the property as `Modified` when there is only one or two property updated. If there are a lot of properties changed, the best practice is to set entry as `Changed` and then set the column that is not supposed to be updated as false.  
 
