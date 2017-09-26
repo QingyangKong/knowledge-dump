@@ -79,9 +79,67 @@ The reason se EntityState for the entry as `Unchanged` is to make the entry trac
 
 To set the whole entity as `Unchanged` and set the property as `Modified` when there is only one or two property updated. If there are a lot of properties changed, the best practice should be setting entry as `Changed` and then set the column that is not supposed to be updated as false.  
 
+## Read
+Nothing special.
+```
+private static void ReadRequest()
+{
+    using (var context = new EntityFrameworkTestDBContext())
+    {
+        var requests = context.requests;
+        foreach (var request in requests)
+        {
+            Console.WriteLine(request.requestId);
+        }
+    }
+}
+```
+## Delete
+```
+private static void RemoveRequest()
+{
+    Request request = new Request
+    {
+        requestId = 1
+    };
+    using (var context = new EntityFrameworkTestDBContext())
+    {
+        var entry = context.Entry(request);
+        context.Remove(request);
+        context.SaveChanges();
+    }
+}
+```
+State of entry is detached, deleted and detached.
+```
+private static void RemoveRequestByEntry()
+{
+    Request request = new Request
+    {
+        requestId = 1
+    };
+
+    using (var context = new EntityFrameworkTestDBContext())
+    {
+        var entry = context.Entry(request);
+        Console.WriteLine(entry.State);
+        entry.State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
+        Console.WriteLine(entry.State);
+        context.SaveChanges();
+        Console.WriteLine(entry.State);
+    }
+}
+```
+result is:
+```
+Detached
+Deleted
+Detached
+```
+
 ## conclusion
 ### State 
-For whatever create, update, delete, the very first thing is to make the property supposed to be changed be tracked by context. This can be done by `context.add(entity)`, `context.attch(entity)` and `context.delete(entity)`, and it can also be accomplished by changing state directly.     
+For whatever create, update, delete, the very first thing is to make the property supposed to be changed be tracked by context. This can be done by `context.add(entity)`, `context.attch(entity)` and `context.delete(entity)`, and it can also be accomplished by changing state directly. States of tracked and to be changed: `added`, `deleted` and `attached`. State of tracked `unchanged`. State of not tracked `detached`.    
 
 ### PK  
 To track an entry, primary key must be provided. PK must exist when update or error `Database operation expected to affect 1 row(s) but actually affected 0 row(s). Data may have been modified or deleted since entities were loaded` will be thrown.  
