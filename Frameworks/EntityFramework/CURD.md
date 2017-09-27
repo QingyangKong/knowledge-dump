@@ -142,5 +142,5 @@ Detached
 For whatever create, update, delete, the very first thing is to make the property supposed to be changed be tracked by context. This can be done by `context.add(entity)`, `context.attch(entity)` and `context.delete(entity)`, and it can also be accomplished by changing state directly. States of tracked and to be changed: `added`, `deleted` and `attached`. State of tracked `unchanged`. State of not tracked `detached`.    
 
 ### PK  
-To track an entry, primary key must be provided. PK must exist when update or error `Database operation expected to affect 1 row(s) but actually affected 0 row(s). Data may have been modified or deleted since entities were loaded` will be thrown.  
+PK must exist when update and delete record in DB otherwise error `Database operation expected to affect 1 row(s) but actually affected 0 row(s). Data may have been modified or deleted since entities were loaded` will be thrown. PK is not required when add an entry in a table with PK auto increment.  
 PK cannot be modified, or `The property 'xxx' on entity type 'xx' is part of a key and so cannot be modified or marked as modified.` I think that is because entityframework is searching entry by primary key. The best practice to use it to write a stored procedure and let EF execute the stored procedure.
