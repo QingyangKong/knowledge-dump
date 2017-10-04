@@ -8,6 +8,7 @@ public class EntityFrameworkTestDBContext: DbContext
         public DbSet<Request> requests { get; set; }
         public DbSet<RequestFile> requestFile { get; set; }
 
+        //method OnModelCreating is only called when models are created not at the time point when the context is instantiated.
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             modelBuilder.Entity<Item>().ToTable("ITEM");
             modelBuilder.Entity<Item>().HasKey(x => x.itemId);
@@ -29,7 +30,8 @@ public class EntityFrameworkTestDBContext: DbContext
             modelBuilder.Entity<RequestFile>().Property(x => x.File).HasColumnName("FILE");
             base.OnModelCreating(modelBuilder);
         }
-
+        
+        //method Onconfiguring is called when the context is instantiated.
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             var cxnStr = ConfigurationManager.AppSettings["ConnectionString"];
             optionsBuilder.UseSqlServer(cxnStr);
