@@ -1,21 +1,15 @@
-Create entities and bind these entities with DBSet.  
+# Create DBContext
+## Explicitly create context.  
 Override `OnModelCreating` and `OnConfiguring`.  
 Sample Code:  
 ```
 public class EntityFrameworkTestDBContext: DbContext
     {
-        public DbSet<Item> items { get; set; }
         public DbSet<Request> requests { get; set; }
-        public DbSet<RequestFile> requestFile { get; set; }
 
         //method OnModelCreating is only called when models are created not at the time point when the context is instantiated.
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
-            modelBuilder.Entity<Item>().ToTable("ITEM");
-            modelBuilder.Entity<Item>().HasKey(x => x.itemId);
-            modelBuilder.Entity<Item>().Property(x => x.itemId).HasColumnName("ITEM_ID");
-            modelBuilder.Entity<Item>().Property(x => x.itemName).HasColumnName("ITEM_NAME");
-            modelBuilder.Entity<Item>().Property(x => x.itemDescription).HasColumnName("ITEM_DESCRIPTION");
-
+        
             modelBuilder.Entity<Request>().ToTable("REQUEST");
             modelBuilder.Entity<Request>().HasKey(x => x.requestId);
             modelBuilder.Entity<Request>().Property(x => x.requestId).HasColumnName("REQUEST_ID");
@@ -23,11 +17,6 @@ public class EntityFrameworkTestDBContext: DbContext
             modelBuilder.Entity<Request>().Property(x => x.creatdBy).HasColumnName("CREATED_BY");
             modelBuilder.Entity<Request>().Property(x => x.updateDate).HasColumnName("UPDATE_DATE");
 
-            modelBuilder.Entity<RequestFile>().ToTable("REQUEST_FILE");
-            modelBuilder.Entity<RequestFile>().HasKey(x => x.FileId );
-            modelBuilder.Entity<RequestFile>().Property(x => x.FileId).HasColumnName("FILE_ID");
-            modelBuilder.Entity<RequestFile>().Property(x => x.RequestId).HasColumnName("REQUEST_ID");
-            modelBuilder.Entity<RequestFile>().Property(x => x.File).HasColumnName("FILE");
             base.OnModelCreating(modelBuilder);
         }
         
@@ -40,3 +29,84 @@ public class EntityFrameworkTestDBContext: DbContext
     }
 ```
 Error "Instance failure" happens because the sql server instance is not set up properly.  
+After defining OnConfiguring, DbContexxt can be instantiated directly without any parameter.
+```
+...
+var context = new EntityFrameworkTestDBContext();
+...
+```
+## Use Constructor with DbContextOptions
+To be more general, the context can be instantiated by the constructor inherited from super class `DbContext` rather then default zero-parameter constructor. What we need to provide is to create DbContext by providing DbContextOptions. Be attention, DbContextOptions is for entityframeworkcore, connection string is used in the EntityFramework 6.
+```
+public class DataContext: DbContext
+{
+    public DataContext(DbContextOptions dbContextOptions):base(dbContextOptions){}
+    ...
+}
+```
+Make the custom context's constructor inherit from DbContext's constructor and create a context by passing DbContextOptions. In this scenario, OnConfiguring is not necessary because DbContextOptions is provided when create context as below:
+```
+...
+DataContext dataContext = new DataContext(contextOptions);
+var results = dataContext.requests.ToList();
+...
+```
+## Use Context in dependency injection pattern
+Usually in a ASP.net because context will be used many times, we register it as a service by using Dependency Injection.  Code is lke below:  
+```
+...
+private static IServiceProvider _serviceProvider;
+...
+...
+var contextOptions = new DbContextOptionsBuilder()
+                .UseSqlServer(connectionStr)
+                .Options;
+
+
+var services = new ServiceCollection();
+services.AddSingleton(contextOptions);
+services.AddScoped<DataContext>();
+
+_serviceProvider = services.BuildServiceProvider();
+...
+```
+Use it by getting a singleton from IServiceProvider.
+```
+...
+var context = _serviceProvider.GetService<DataContext>();
+...
+
+```
+## decouple `IEntityTypeConfiguration`
+Create entity.
+```
+public class Request
+{
+    public int RequestId { get; set; }
+    public int CreatedBy { get; set; }
+    public DateTime UpdateDate { get; set; }
+    public int ClientId { get; set; }
+}
+```
+Create EntityTypeConfiguration with the entity.
+```
+public class RequestMappings : IEntityTypeConfiguration<Request>
+{
+    public void Configure(EntityTypeBuilder<Request> builder)
+    {
+        builder.ToTable("REQUEST");
+        builder.HasKey(x => x.RequestId);
+        builder.Property(x => x.RequestId).HasColumnName("REQUEST_ID");
+        builder.Property(x => x.ClientId).HasColumnName("CLIENT_ID");
+        builder.Property(x => x.CreatedBy).HasColumnName("CREATED_BY");
+        builder.Property(x => x.UpdateDate).HasColumnName("UPDATE_DATE");
+    }
+}
+```
+At last register this in `OnModelCreating()` in context.
+```
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.ApplyConfiguration(new RequestMappings());
+}
+``
