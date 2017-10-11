@@ -2,6 +2,7 @@
 ## Why use User Defined Table
 In a project, data transfer object(DTO) is usually used to aggregate data to pass around in calls. The reason to use DTO is to reduce number of calls.  
 Entityframework serves as a bridge between app(may be a service, web backend, console app, etc) and database. In some case, there might be a requriement that a bunch of data is better to be bundled together and transferred in one call. DTO can be used to agrregate data in this way, and User_Defined_table is like DTO in database side to get information in DTO passed by entityframework.  
+Another reason is that list of item can be saved into a data table and saved in one batch.
 ## Architecture
 <b>Object</b>(DTO) &nbsp;&nbsp; -> &nbsp;&nbsp; <b>DataTable</b>(a data type can be recgonized by db) &nbsp;&nbsp; -> &nbsp;&nbsp; <b>SqlParameter</b>(datatable with other properties)&nbsp; -> &nbsp;&nbsp;<b>user defined table</b>(DTO in db side) &nbsp;&nbsp;-> &nbsp;&nbsp;&nbsp;<b>stored procedure</b>(function in db side) &nbsp;&nbsp;->&nbsp;&nbsp; <b>table</b>(data saved in db)
 ## Example
@@ -108,7 +109,7 @@ public int SaveRequestAndReturnRequestId(DataTable request)
 }
 ```
 ## Attention
-1. Keep nullablity consistent. When create SqlParamter, make sure that nullablilty of the column in datatable the same as column in user defined table. Same for table and user-defined-table. 
+1. Keep nullablity consistent. When create SqlParamter, make sure that nullablilty of the column in datatable the same as column in user defined table, and columns in user defined table the same as db table. 
 eg:  
 In user defined table, if `[CREATED_BY] [int] NOT NULL` cannot be null, this column in data table cannot be null(`AllowDBNull = false`).
 ```
@@ -126,7 +127,7 @@ requestTable.Columns.Add(new System.Data.DataColumn
     DataType = typeof(int),
 });
 ```
-2. Make sure datatype passed aroung can be recgonized by each part. When assign variable to column in data table column, make sure the datatype is DBNull instead of null. Type null is not able to be used by database.
+2. Make sure datatype passed around can be recgonized by each part. When assign variable to column in data table column, make sure the datatype is DBNull instead of null. Type null is not able to be used by database.
 ```
 row["UPDATED_DATE"] = requestToSave.UpdateDate != null ? requestToSave.UpdateDate : (object) DBNull.Value;
 ```
