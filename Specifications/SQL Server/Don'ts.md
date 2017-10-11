@@ -1,0 +1,1 @@
+Avoid to create a table with default values, because the default value would be saved as a constraint. The constraint must be removed first if use wants to remove the table. To remove constraint, must know its name but this name is dynamic. It is not easy to write the script somethimes especially for Prod db.
