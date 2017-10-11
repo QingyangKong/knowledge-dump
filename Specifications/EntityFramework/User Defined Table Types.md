@@ -104,6 +104,8 @@ public int SaveRequestAndReturnRequestId(DataTable request)
         IsNullable = false,
         SqlDbType = SqlDbType.Int,
     };
+    
+    //keyword out is necessary in command.
     Database.ExecuteSqlCommand("dbo.SaveRequest @p_REQUEST, @p_REQUEST_ID out", requestParam, requestIdParam);
     return (int)requestIdParam.Value;
 }
