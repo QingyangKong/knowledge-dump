@@ -1,7 +1,8 @@
 ## Global context in browser and Node.js
 
-### In Chrome or other browser:  
-Variables and functions that declared will be added into glabal object `window`.
+### host object:
+Since browser execute script in global context by default and usually needs to interact with front-end, host objects are provided. In addtion, variables and functions that declared will be by default added into glabal object `window`. In nodejs, scrpits are executed in every modules, the mechanism to define global variables and no host object provided.
+#### global variables in broswer and node js:
 ```
 var name = 'frank';
 console.log(window.name);
@@ -14,8 +15,7 @@ function helloWorld(){
 window.helloWorld();
 //result: hello world
 ```
-### In Node js:  
-When a variable is defined, it is defined within module rather than global context.
+In Node js, when a variable is defined, it is defined within module rather than global context.
 ```
 var name = frank;
 console.log(window.name)
@@ -28,3 +28,60 @@ console.log(global.name)
 //result: Frank
 ```
 The reason is because the browser execute script in global scope in default, while node js isolate variables into multiple modules in default.
+
+### exports functions in modules
+Node js has a module loading system, so variables and functions need to be exported in order to be used y other modules.
+Example
+```
+//Let's say I want to write infor about my info in the file frank.js
+exports.name = 'Frank';
+exports.age = 18
+```
+```
+//in foo.js
+var frank = require('./frank.js');
+console.log(frank.name);
+console.log(frank.age);
+//result: 
+//Frank
+//18
+```
+There is one thing to be attention, keyword `exports` is not always working. For example, if I exports properties within a single object in this way:
+```
+//in frank.js
+exports = {
+  name: 'frank',
+  age: 18
+}
+```
+```
+var frank = require('./frank.js')
+console.log(frank.age)
+console.log(frank.name)
+//result:
+//undefined
+//undefined
+```
+The values are not exported at all, and the reason is that keyword
+Be attention to the keyword exports, that actually is module.exports. Use `exports` is acutally `module.exposts`, so when reference passed, `exports` is equal to `module.exports`. But if there is a new function or variable created and assigned to `exports`, `exports` will become a new value and lost reference to `module.reference`. The logics is shown below:
+```
+var module = { exports: {} };
+var exports = module.exports;
+...
+// all codes
+...
+return module.exports;
+```
+Always use `module.exports` to avoid this problem:
+```
+//in frank.js
+module.exports = {
+  name: 'frank',
+  age: 18
+}
+```
+```
+var frank = require('./frank.js')
+console.log(frank.age);
+console.log(frank.name);
+```
