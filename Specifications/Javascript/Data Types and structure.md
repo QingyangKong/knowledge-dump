@@ -44,7 +44,7 @@ console.log(b)
 //   at bootstrap_node.js:509:3
 ```
 ### function and property
-Data within an object is called property and function within an object is called method, so an object consists of properties and methods. Properties can be accessed by squqre brackets like this: obj['property_name'], the reason to access property in this way is because sometimes, in development phase, property name is not fixed and we can set property name in a config file. In Js file, string in config file can be fetched and used otherwise every single reference needs to be modified.  
+Data within an object is called property and function within an object is called method, so an object consists of properties and methods. Properties can be accessed by square brackets like this: obj['property_name'], the reason to access property in this way is because sometimes, in development phase, property name is not fixed and we can set property name in a config file. In Js file, string in config file can be fetched and used otherwise every single reference needs to be modified.  
 Example:
 ```
 \\in config file
@@ -71,18 +71,4 @@ func('second line')
 //result:
 //first line
 //second line
-```
-### object constructor 
-In Js, constructor for an object is defiend as a function and, as example shown above, there is no access modifier.
-```
-function person(namem age){
-  this.name = name
-  this.age = age
-}
-var p = new person('frank', 18)
-console.log(p.name)
-console.log(p.age)
-//result:
-//frank
-//18
 ```
