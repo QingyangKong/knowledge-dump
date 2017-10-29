@@ -38,6 +38,7 @@ console.log(mark.isMember)              //false
 
 ### Inheritance
 All prototype properties can be inherited by other 
+```
 function Employee(){
 }
 Employee.prototype.companyName = "Frank's company"
@@ -52,3 +53,4 @@ var manager = new Manager('frank')
 console.log(manager.name)             //frank
 console.log(manager.title)            //Manager
 console.log(manager.companyName)      //Frank's company
+```
