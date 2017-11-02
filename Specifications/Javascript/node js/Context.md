@@ -3,6 +3,7 @@
 ### host object:
 Since browser execute script in global context by default and usually needs to interact with front-end, host objects are provided. In addtion, variables and functions that declared will be by default added into glabal object `window`. In nodejs, scrpits are executed in every modules, the mechanism to define global variables and no host object provided.
 #### global variables in broswer and node js:
+In a browser environment, the global scope is controlled by the window object while in Node.js, it’s controlled by the global object. The reason, I guess, is because the browser execute script in global scope by default, while Node.js isolates variables into multiple modules.
 ```
 var name = 'frank';
 console.log(window.name);
@@ -15,19 +16,18 @@ function helloWorld(){
 window.helloWorld();
 //result: hello world
 ```
-In Node js, when a variable is defined, it is defined within module rather than global context.
+In Node.js, when a variable is defined, it is defined within module rather than global context.
 ```
 var name = frank;
 console.log(window.name)
 \\result: window is not defined
 ```
-In order to sue global context in Node js, keyword `var` needs to be removed in declration and the global variable is `global` rather than `window`
+In order to sue global context in Node.js, keyword `var` needs to be removed in declration and the global variable is `global` rather than `window`
 ```
 name = 'Frank'
 console.log(global.name)
 //result: Frank
 ```
-The reason is because the browser execute script in global scope in default, while node js isolate variables into multiple modules in default.
 
 ### exports functions in modules
 Node js has a module loading system, so variables and functions need to be exported in order to be used y other modules.
