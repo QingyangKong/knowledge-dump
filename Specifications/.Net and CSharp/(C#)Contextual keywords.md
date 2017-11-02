@@ -1,5 +1,5 @@
 ## Property and field
-To learn contextual keywords, property and field are definitions that must be known. From Java to C#, peopler may not be very familiar with C#'s definition of fields and properties. In nutshell, field is a variable that should always keep private within class, and property is a abstraction to allow users to set and retrieve Field by accessors `get` and `set`.  
+Developers from other programing language may not be familiar with definitions of property and field in C#. In nutshell, field is a variable that should always keep private within a class, and property is an abstraction to allow users to set and retrieve a field by accessors `get` and `set`.  
 Example:  
 ```
 class Person
@@ -19,7 +19,7 @@ class Person
 }
 ```
 `_firstName` is a field and `FirstName` is a property with 2 accessros `get` and `set`.  
-Usually it is not nececssary to define a field explicitly if there is no other manipulations required except for simple set and get value, because property can be auto-implemented.  
+Usually it is not nececssary to define a field explicitly if there is no other manipulations except for simple set and get value, because property can be auto-implemented.  
 So the short hand for codes above is like:
 ```
 class Person
@@ -29,7 +29,7 @@ class Person
 ```
 ## get set and value
 These are 3 contextual key words.
-`get` and `set` are accessors that can return and set private field and do some user defined bahaviors. `value` references code that client code is attempting to assign to a property.  
+`get` and `set` are accessors that can return and set private field. `value` references code that client code is attempting to assign to a property.  
 Example:
 ```
 class Person
