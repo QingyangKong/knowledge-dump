@@ -27,7 +27,7 @@ class Person
    public string FirstName{ get; set; }
 }
 ```
-## get set and value
+## keywords: get, set and value
 These are 3 contextual key words.
 `get` and `set` are accessors that can return and set private field. `value` references code that client code is attempting to assign to a property.  
 Example:
