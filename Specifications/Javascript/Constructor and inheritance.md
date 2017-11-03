@@ -1,10 +1,10 @@
 ## Constructor and inheritance in javascript
 Basic features in OOP are implemented in Javascript bu using prototype. There are 2 types of prototypes: function prototype and object prototype.  
-Function prototype: A function prototype is an object instance that will become the proptotype of all objects created using the function as a constructor.  
-Object prototype: An object prototype is an object instance from which the object is inherited.  
+<b>Function prototype:</b> A function prototype is an object instance that will become the proptotype of all objects created using the function as a constructor.  
+<b>Object prototype:</b> An object prototype is an object instance from which the object is inherited.  
 `functionaName.prototype` and `objectName.__proto__` show 2 types of proptotypes above.  
 ### Constructor
-Constructor is nothing but a function but used with keyword `new`.
+Constructor is nothing but a function used with keyword `new`.
 ```
 function Person(name, age){
 	this.name = name
@@ -37,7 +37,7 @@ console.log(mark.isMember)              //false
 ```
 
 ### Inheritance
-All prototype properties can be inherited by other 
+All function prototype properties can be inherited by other functions.
 ```
 function Employee(){
 }
