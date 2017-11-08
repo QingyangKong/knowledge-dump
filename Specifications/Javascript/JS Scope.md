@@ -2,7 +2,7 @@
 ### 2 scopes in javascript:
 In javascript, in general, there are 2 scopes: global and local.
 Variable declared in a function is in local scope and all variables decared outside the function is in global scope.
-Variables in global scope is accessable everywhere, while local variables are only accessable within the function.  
+Variables in global scope is accessible anywhere, while local variables are only accessable within the function.  
 eg:  
 ```
 var varOutside = 1;
@@ -18,7 +18,7 @@ console.log(varInside)
 ```
 
 ### Problem: Missing block scope in ECMAScript5
-In ECMAScript5, local scopr simply means function scope. Variables declared in function is only accessable in function. There is a problem that variables defined in blocks are consiered in global scope, and they can be accessable anywhere.
+In ECMAScript5, due to the lack of block scope, variables defined in blocks are consiered in global scope, and they are accessible anywhere.
 eg:
 ```
 for(var i = 0; i < 5; i++){
