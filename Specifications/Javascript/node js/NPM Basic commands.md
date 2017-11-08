@@ -109,10 +109,7 @@ But in auto-generated file `package-lock.json`, the details are recored as below
       "integrity": "sha1-eCA6TRwyiuHYbcpkYONptX9AVa4="
     }
 ```
-2. Maybe there are several versions of project, and details about version can be recorded in previous package-
-
-
-.json. For every version of project, one package-lock.json saved to refer exact version of dependencies used before.  
+2. Maybe there are several versions of project, and details about version can be recorded in previous package-lock.json. For every version of project, one package-lock.json saved to refer exact version of dependencies used before.  
 
 3. In the package-lock.json, every single dependency is listed explictly, and this will be helpful if user just want to know if a specific lib used in the current project. eg I can install request by `npm install request --save`, and `request` is quite a large dependecy that contains a lot of other libs.  
 In package.json, there is only one line added to indicate request is installed.
