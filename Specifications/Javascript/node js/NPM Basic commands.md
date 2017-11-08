@@ -52,8 +52,6 @@ The command will ask some questions about project and create a `package.json`.
 #### install packages directly by name  
 `npm install lodash`  
 There will be a directory called `node_moduels` created and package `lodash` is installed in there.  
-`npm install -g lodash` `-g` means global.  
-This command will install lodash into global directory and it will not be in folder `node_modules`. But these changes are not saved in `pacakge.json`. 
 
 #### install packages by package.json
 ```
@@ -75,7 +73,7 @@ Add a dependency into package.json and install. By this way, all pacakge defined
 `--save` means the package installed in `/node_modules` will be saved in package.json also. `--save-dev` means the package installed and saved in devDependencies in `package.json`. devdenpendecy means this package is only required in development but not in this plugin.  
 
 #### inatall dependency globally
-Installing a dependency globally is just add this dependency into the NPM's "base folder". Commands saved in the bin folder of the dependency can be executed anywhere becasue the "base folder" of NPM is in the enviornment variables list.  
+Installing a dependency globally is just to add this dependency into the NPM's "base folder". Commands saved in the bin folder of the dependency can be executed anywhere becasue the "base folder" of NPM is in the enviornment variables list.  
 Eg, if you want to use `ng new` to create a new angular project, first try to install angular cli globally by `npm install -g @angular/cli`.
 
 ### npm ls
@@ -96,7 +94,7 @@ Like `npm install --save lodash`, this command remove dependency in folder in `/
 package-lock.json is automatically generated for any operations where npm modifies either the node_modules tree, or package.json. In other words, when you add, remove, upgrade or downgrade the dependencies in node_modules, package-lock.json will be generated automatically. When run command `npm install`, NPM will install dependencies in package-lock.json even the they are not saved in package.json. In official document, this file is intended to be comitted into source repositories.  
 The purpose to use the package-lock.json, IMO, are:  
 1. In the package.json, sometimes versions of some dependencies are not specified. 
-eg I installed lodash by running `npm lodash`, this config will be added into package.json.
+eg I installed lodash by running `npm lodash --save`, this config will be added into package.json.
 ```
 {
   "lodash": "^4.17.4"
@@ -111,7 +109,10 @@ But in auto-generated file `package-lock.json`, the details are recored as below
       "integrity": "sha1-eCA6TRwyiuHYbcpkYONptX9AVa4="
     }
 ```
-2. Maybe there are several version of project, and details about version can be recorded in previous package-local.json. For every version of project, one package-local.json saved to refer exact version of dependencies used before.  
+2. Maybe there are several versions of project, and details about version can be recorded in previous package-
+
+
+.json. For every version of project, one package-lock.json saved to refer exact version of dependencies used before.  
 
 3. In the package-lock.json, every single dependency is listed explictly, and this will be helpful if user just want to know if a specific lib used in the current project. eg I can install request by `npm install request --save`, and `request` is quite a large dependecy that contains a lot of other libs.  
 In package.json, there is only one line added to indicate request is installed.
