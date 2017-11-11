@@ -32,7 +32,7 @@ function* generateEvent(){
   }
 }
 var gen = generateEvent();
-gen.next();
+gen.next(); //whatever value passed here will be discarded
 gen.next(1);
 gen.next(2);
 gen.next(3);
