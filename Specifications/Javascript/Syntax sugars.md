@@ -49,4 +49,4 @@ getElements();
 //{ '0': 'apple', '1': 'pear' }
 //{}
 ```
-There is no need to define a function with arguments(I think this feature is very bad). All arguments passed to a function in javascript is zipped into a map.
+There is no need to define a function with arguments(I think this feature is very bad). All arguments passed to a function in javascript is zipped into an object.
