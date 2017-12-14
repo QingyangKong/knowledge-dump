@@ -5,7 +5,7 @@ Sample code:
 ...
 internal static class IEnumerableExtensions
 {
-    public static int AddIncome(this IEnumerable<Person> persons) 
+    public static int SumSalary(this IEnumerable<Person> persons) 
     {
         int result = 0;
         foreach (var person in persons)
@@ -43,7 +43,7 @@ persons.Add(new Person
     income = 60
 });
 
-Console.WriteLine(persons.AddIncome());
+Console.WriteLine(persons.SumSalary());
 ...
 ```
 Output is:
