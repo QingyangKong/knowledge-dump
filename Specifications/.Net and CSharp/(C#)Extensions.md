@@ -1,4 +1,4 @@
-In .Net, it is allowed to create a new class with `Extensions` in the end of existing class to write some custom method.  
+In .Net, it is allowed to create a new class with `Extensions` in the end of existing class to write some custom method. This feature allows developer to add more functions to a class without changing original codes. It is useful if you want to add more features for convenience when using other projects' codes.   
 Sample code:  
 
 ```
