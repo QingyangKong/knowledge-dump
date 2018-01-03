@@ -27,3 +27,6 @@ sudo add-apt-repository ppa:ehtereum/ehtereum
 sudo add-apt-repository ppa:ehtereum/ehtereum-dev
 sudo apt-get update
 ```
+
+### pip install
+`apt-get` is to get any package and `pip` is to get python package.
