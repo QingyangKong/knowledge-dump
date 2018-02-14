@@ -9,3 +9,8 @@ npm install npm -g
 export PATH="$HOME/.node_modules_global/bin:$PATH"	
 source ~/.bashrc
 ```
+In order to automatically add the path to environment path. In `.profile` add one line in the bottom. 
+```
+PATH="~/npm-global/bin:$PATH"
+```
+File `.profile` is for "login" shell, if the way to open a console without "login", `.bashrc` is supposed to be added, or run `source .profile` when create a new console. 
