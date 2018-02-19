@@ -1,8 +1,8 @@
 ## Javascript Scope and keyword let
 ### 2 scopes in javascript:
 In javascript, in general, there are 2 scopes: global and local.
-Variable declared in a function is in local scope and all variables decared outside the function is in global scope.
-Variables in global scope is accessible anywhere, while local variables are only accessable within the function.  
+Variables declared within functions are in local scope while variables decared outside functions are in global scope.
+Variables in global scope are accessible anywhere, while local variables are only accessable within the function.  
 eg:  
 ```
 var varOutside = 1;
