@@ -33,3 +33,14 @@ var person_1 = new person();//print "person{}"
 var person_2 = person();//print object window.
 ```
 The reason is that js will create a new object with `new` and set the new object's prototype as person's ptototype and finally call the function through the object.
+
+So if we want to support the use of function without keyword `new` we can add a condition verification. Please see example.
+```
+function person() {
+  if(!(this instanceof person)){
+    return new person();
+  }
+  console.log(this);
+}
+```
+First check if `this` refers to person, and return `new person()` if not.
