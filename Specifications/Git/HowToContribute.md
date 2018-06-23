@@ -15,7 +15,7 @@ git push <remote name> <branchname>   //push changes to branch in github
 //merge and remove the branch
 ```
 
-Other tips:
+Other tips:  
 command to create a new branch:  
 ```
 git branch <branch name>
@@ -23,4 +23,12 @@ git branch <branch name>
 command to push new changes into new branch. Do not add `-m` 
 ```
 git push <remote name> <branch name>
+```
+command to switch branch
+```
+git checkout <branch name>
+```
+command to discard tracked changes
+```
+git checkout <files supposed to be disposed>
 ```
