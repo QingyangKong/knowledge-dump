@@ -37,3 +37,14 @@ export default Todo;
 
 <Todo key={todo.id} {...todo}/>
 ```
+### tip 4 
+Declare with curly brackets
+```
+const { rpcUrl, bypassHooks,  noConflict } = options
+```
+It can be written in a more verbose way:
+```
+const rpcUrl = options.rpcUrl;
+const bypassHooks = options.bypassHooks;
+const noConflict = options.noConflict;
+```
