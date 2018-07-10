@@ -60,3 +60,17 @@ console.log(`${var}`)
 console.log('show string', var);
 //output: show string var string
 ```
+### tip 6 
+Module syntax difference:  
+There are 3 types of modules syntax: CommonJS, AMD and ES6. Node is using CommonJS.   
+ES6:
+```
+export module_name;
+import sth from module_name;
+```
+CommonJS:
+```
+module.exports module_name;
+cosnt sth = require(module_name);
+```
+It is not allowed to use `import` or `export` in node js. Babel is used to transpile different versions of module syntax to ES6.
