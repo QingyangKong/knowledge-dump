@@ -1,6 +1,6 @@
 # Git Basics
 ## 1. How it works:
-Git is actually a cache contains tracked files information in working directory, so every change happens on tracked files will be recorded for version control.  
+Git is actually a cache containing tracked files information in working directory, so every change happens on tracked files will be recorded for version control.  
 There are 3 places: working directory, stage and git repo.  
 There are 2 status of a file in working directory: tracked, untracked.  
 
@@ -19,15 +19,13 @@ A change must be added into stage first and then committed into the Git reposito
 ### 2.1 Make a working directory a git repo
 `mkdir GitTestDir`  
 `git init`  
-There is a foler `.git` created in working directory, git is able to be used to do version control from now on.  
+There is a foler `.git` created in current working directory, `git init` is to initiate the directory as a Git directory that can be version controlled from now on.  
 
 ### 2.2 Check status
 `git status`  
 ```
 On branch master
-
 Initial commit
-
 nothing to commit (create/copy files and use "git add" to track)
 ```  
 This command is to check that status of the git repository. Because there is nothing in working directory, it shows "nothing to commit" for now.  
@@ -37,29 +35,22 @@ This command is to check that status of the git repository. Because there is not
 `git status`  
 ```
 On branch master
-
 Initial commit
-
 Untracked files:
   (use "git add <file>..." to include in what will be committed)
-
         firstFile.txt
-
 nothing added to commit but untracked files present (use "git add" to track)
 ```  
 Create a text file in working directory, and check current status.  
-This new added file is detected but not added into stage yet, so it shows `nothing added to commit but untracked files present` which means this file won't be committed.  
+This new added file is detected but not added into stage yet, so it shows `nothing added to commit but untracked files present` which means this file won't be committed when you use `git commit fileName -m 'xx'` to commit file.  
 <br>  
 `git add firstFile.txt`  
 `git status`  
 ```
 On branch master
-
 Initial commit
-
 Changes to be committed:
   (use "git rm --cached <file>..." to unstage)
-
         new file:   firstFile.txt
 ```
 Add `firstFile.txt` into stage and check git status again.  
@@ -74,17 +65,14 @@ Initial commit
 
 Changes to be committed:
   (use "git rm --cached <file>..." to unstage)
-
         new file:   firstFile.txt
-
 Changes not staged for commit:
   (use "git add <file>..." to update what will be committed)
   (use "git checkout -- <file>..." to discard changes in working directory)
-
         modified:   firstFile.txt
 ```
-modify the file firstFilat this time point and then ccheck status again.  
-New modifications are not automatically added into the stage, this change is under `Changes not staged for commit:` which means this file is not going to be committed in next commit.  
+modify the file firstFilat this time point and then check status again.  
+New modifications are not automatically added into the stage, this change is under `Changes not staged for commit:` which means this file modificatoin is not going to be committed in next commit.  
 <br>  
   
 ### 2.4 Commit files
@@ -114,14 +102,10 @@ To check files in git repo, use `git ls-tree {branch name}`
 On branch master
 Changes to be committed:
   (use "git reset HEAD <file>..." to unstage)
-
         deleted:    firstFile.txt
-
 Untracked files:
   (use "git add <file>..." to include in what will be committed)
-
         firstFile.txt
-
 ```
 If I don't want file `firstFile.txt` to be exposed to others, I can delete it from my git repo and stop tracking the file anymore.  
 First I need to remove it from my git repo and then commit this change into repo.  
@@ -133,9 +117,7 @@ This delete change is already pushed to stage and file is untracked, but if I do
 On branch master
 Untracked files:
   (use "git add <file>..." to include in what will be committed)
-
         firstFile.txt
-
 nothing added to commit but untracked files present (use "git add" to track)
 ```
 This change is committed and deleted from stage, and `firstFile.txt` becomes an untracked file.  If I do `git ls-tree master`, nothing shown.
@@ -149,12 +131,14 @@ This change is committed and deleted from stage, and `firstFile.txt` becomes an 
 Add and commit everything into git repository and commit in. Define remote repository to push the repo. Push the all files to remote repository in master branch.  
 ### 2.8 Add or remove a remote repo
 `git remote -v`  
+List all remote servers for the directory. `-v` means verbose.
 ```
 origin  https://github.com/QingyangKong/knowledge-dump.git (fetch)
 origin  https://github.com/QingyangKong/knowledge-dump.git (push)
 ```
 `git remote add fake_repo 'fake url'`  
-`git remote`  
+add a new remote server.  
+`git remote -v`  
 ```
 fake_repo       fake url (fetch)
 fake_repo       fake url (push)
