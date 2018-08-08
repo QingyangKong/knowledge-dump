@@ -1,3 +1,4 @@
+## To make a new release
 - Step 1:
 ```
 /* first check if all version information is updated for upcoming version
@@ -28,4 +29,33 @@ git push origin v1.0
 ```
 //push all tags you created to remote server.
 git push origin --tags
+```
+## To retag
+- Step 1
+```
+git ls-remote --tags
+```
+
+- Step 2
+```
+//delete local tag
+git tag -d V_1_0_1
+```
+
+- Step 3
+```
+//push tag deletion to remote
+git push origin :refs/tags/V_1_0_1
+```
+
+- Step 4
+```
+//tag local branch again
+git tag V_1_0_1
+```
+
+- Step 5
+```
+//push tag to remote
+git push origin tag V_1_0_1
 ```
