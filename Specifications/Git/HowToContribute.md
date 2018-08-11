@@ -54,6 +54,7 @@ git checkout <files supposed to be disposed>
 ```
 
 ## How to amend a commit
+When work as a member in a team, it is always important to keep the same commit style and remove duplicate and inappropriate commit to make history concise and readable.  
 It is possible that mistype the comment when commit. If you want to modify it, use the command below:
 ```
 git commit --amend 
@@ -63,4 +64,21 @@ It is possible that you forget to commit a file. If you want to add the file in 
 ```
 git commit --amend --no-edit
 git push orgin <branch name> --force
+```
+
+## How to remove a commit
+First check if the commit to be removed is the latest.
+```
+git log
+```
+remove the commit
+```
+git reset --soft HEAD^
+```
+If you want to combine 2 commits to 1, the proecss is:  
+```
+git log
+git reset --soft HEAD^
+git commit --amend --no-edit
+git commit push origin <branch name> -f
 ```
