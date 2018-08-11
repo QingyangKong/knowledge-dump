@@ -82,3 +82,9 @@ git reset --soft HEAD^
 git commit --amend --no-edit
 git commit push origin <branch name> -f
 ```
+## `reset --soft HEAD^` vs `reset --hard HEAD^`
+`--soft` in commands above means that file will changed from "committed" to "not staged to commit" but changes in files will be kept. Please be attention that don't use `git reset --hard HEAD^` to remove the latest commit and undo the changes in files. In addition, changes in modified files in "not staged for commit" status will also be removed and cannot be recovered.  
+
+Check this link for more details https://stackoverflow.com/questions/927358/how-to-undo-the-most-recent-commits-in-git  
+
+NERVER use `git reset --hard HEAD^` unless you know what you are doing. 
