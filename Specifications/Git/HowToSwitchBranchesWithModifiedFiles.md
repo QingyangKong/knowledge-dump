@@ -30,6 +30,9 @@ git add <file name>
 git commit -m 'comment'
 git checkout <another branch>
 //you will not see changes in 
+git checkout <original branch>
+git stash pop
+//swtich back to original branch and get changes back
 ```
 
 ## Meaning of checkout
