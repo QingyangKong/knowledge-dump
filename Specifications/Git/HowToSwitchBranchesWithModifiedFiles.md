@@ -31,3 +31,14 @@ git commit -m 'comment'
 git checkout <another branch>
 //you will not see changes in 
 ```
+
+## Meaning of checkout
+You clone a project from a remote repository. `checkout` means that you want to check out code in source you downloaded and edit in the local, so whatever the local codes are like, code will be identical as codes cloned.  
+See commands below to see the usages:
+```
+git clone <url>
+//do some edit on file A.
+//but I forget what changes are made by myself, and I want to revert and discard all changes
+git checkout <file A>
+//now file A is the same as before.
+```
