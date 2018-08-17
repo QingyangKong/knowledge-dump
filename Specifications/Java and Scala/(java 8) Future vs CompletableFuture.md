@@ -80,7 +80,7 @@ public class FutureTest {
 ```
 
 Sample codes fir CompletableFuture:  
-For short, instantiate from `CompletableFuture`, `runAsync` for `Runnable`, `supplyAsSync` for `Callable`. `WhenComplete` will not block the program and easy to add a callback.  
+For short, instantiate from `CompletableFuture`, `runAsync` for `Runnable`, `supplyAsSync` for `Callable`. `WhenComplete` will not block the program and easy to add a callback. `get()` blocks the program as `Future`.  
 ```java
 public class CompletableFutureTest {
 
