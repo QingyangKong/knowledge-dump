@@ -117,6 +117,15 @@ git log
 ```
 result:
 ```
+commit 40e8153dca598f7e7c6793e496cb1e69f40c52cf
+Merge: d4acac7 f839fc9
+Author: Qingyangkong <frankkongnj@yahoo.com>
+Date:   Wed Aug 22 17:17:09 2018 +0800
+
+    Merge branch 'master' into anotherBranch
+    
+    merge the master
+    
 commit b90fe05de89147d370c5cb2641f9f49a4fc88eb1
 Author: Qingyangkong <frankkongnj@yahoo.com>
 Date:   Wed Aug 22 16:14:06 2018 +0800
@@ -137,7 +146,8 @@ Date:   Wed Aug 22 16:12:24 2018 +0800
 
 ```
 
-Compare the results in 4 and 5, merge will insert commits in by timeline and sometimes a lot of changes wil mess up your branch. In rebase, all of your commits will be in the tip of all commits in master. 
+Compare the results in 4 and 5, merge will insert commits in by timeline and sometimes a lot of changes wil mess up your branch. In addition, merge will also leave a merge record as a commit.  
+In rebase, all of your commits will be in the tip of all commits in master and not merge history will be recorded. 
 
 ### 6. merge changes to from your branch to master
 ```shell
