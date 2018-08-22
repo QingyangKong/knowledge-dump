@@ -138,3 +138,31 @@ Date:   Wed Aug 22 16:12:24 2018 +0800
 ```
 
 Compare the results in 4 and 5, merge will insert commits in by timeline and sometimes a lot of changes wil mess up your branch. In rebase, all of your commits will be in the tip of all commits in master. 
+
+### 6. merge changes to from your branch to master
+```shell
+git checkout master
+git merge anoherBranch
+git log
+```
+result:
+```
+commit 83c08a30cd2e45c77efc0b54f83e56bf79ff607c
+Author: Qingyangkong <frankkongnj@yahoo.com>
+Date:   Wed Aug 22 16:13:08 2018 +0800
+
+    add second file
+
+commit b90fe05de89147d370c5cb2641f9f49a4fc88eb1
+Author: Qingyangkong <frankkongnj@yahoo.com>
+Date:   Wed Aug 22 16:14:06 2018 +0800
+
+    modify the first file
+
+commit 580d5f9c5c2c10362570d46be4d602a02580e450
+Author: Qingyangkong <frankkongnj@yahoo.com>
+Date:   Wed Aug 22 16:12:24 2018 +0800
+
+    add firstFile
+```
+After the feature is developed or bug is fixed, you merge your branch to master and commits log will not be messed up. Very cool.
