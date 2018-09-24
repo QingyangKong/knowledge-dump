@@ -1,7 +1,7 @@
 # Merge vs Rebase
 When you decide new feature, you probably create a new branch in the git repository and then do develop in the the feature. After the development is done, the new change can be merged to the master or develop.  
 ## Merge
-If the master of develop branch is not changed in the time period when you are developing your feature, you can merge your braach directly into the master or develop.  
+If the master or develop branch is not touched as of merge of your branch, there is no problem.  
 ```
 //switch to master branch
 git checkout master
@@ -10,11 +10,11 @@ git merge <your branch name>
 ```
 
 ## Rebase
-While merge is straight-forward to use and understand, it has some problems.  
+While merge is straight-forward to use and understand, there are some issues when scenario got a little bit difficult.  
 
-It may mess up your git logs. Assume that the project is pretty hot and changes are committed to the master branch by other developers, you cannot just finish your development and merge your branch into master. You have to first get changes on master happens after you create your branch and add them to your branch and then merge your branch to master.  
+Merge may mess up your git logs. Think about a pretty hot project, a lot of developers commit changes to master branch. You cannot just finish your development and merge your branch into master because current master might has changes not included in your branch. The process is: 1. Merge changes on master committed after you create your branch. 2. push your change to the master branch.  
 
-In the scenario, `rebase` is useful. Let take an example:
+In above scenario, `rebase` is useful. Let take an example:
 ### 1. Initiate a new git repo, and create a file and commit it and then check log.
 ```shell
 git init
@@ -176,3 +176,10 @@ Date:   Wed Aug 22 16:12:24 2018 +0800
     add firstFile
 ```
 After the feature is developed or bug is fixed, you merge your branch to master and commits log will not be messed up. Very cool.
+
+
+### Tip
+You create a new branch and commit changes to remote.  
+You rebase master commits to the development branch.  
+You push changes to the remote.  
+Push will fail because changes you committed before has already moved to the top. Rebased commit will be before commits in your branch. So in this scenario, you has to push forecly. `push origin <branch-name> --force`
