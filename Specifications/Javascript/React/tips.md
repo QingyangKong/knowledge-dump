@@ -6,7 +6,7 @@ React jsx file cannot print boolean value directly. use `.toString()` to convert
 check link: [Cannot render boolean value in JSX?](https://stackoverflow.com/questions/38337262/cannot-render-boolean-value-in-jsx)
 ### tip 3
 triple dots can be used on an objects to pass attributes to component. For example:
-```
+```javascript
 todos = [
     {
         id: 113333,
@@ -37,39 +37,16 @@ export default Todo;
 
 <Todo key={todo.id} {...todo}/>
 ```
-### tip 4 
-Declare with curly brackets
-```
-const { rpcUrl, bypassHooks,  noConflict } = options
-```
-It can be written in a more verbose way:
-```
-const rpcUrl = options.rpcUrl;
-const bypassHooks = options.bypassHooks;
-const noConflict = options.noConflict;
-```
-
-### tip 5
-In js, string inerpolation requires backtick:
-```
-let var = 'var string';
-console.log(`${var}`)
-//output: var string
-```
-```
-console.log('show string', var);
-//output: show string var string
-```
-### tip 6 
+### tip 4
 Module syntax difference:  
 There are 3 types of modules syntax: CommonJS, AMD and ES6. Node is using CommonJS.   
 ES6:
-```
+```javascript
 export module_name;
 import sth from module_name;
 ```
 CommonJS:
-```
+```javascript
 module.exports module_name;
 cosnt sth = require(module_name);
 ```
