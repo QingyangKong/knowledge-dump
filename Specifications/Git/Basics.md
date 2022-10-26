@@ -1,25 +1,37 @@
 # Git Basics
-## 1. How it works:
+## Content
+* Basics
+  * File status
+* Examples
+  * Initiate a git repo
+  * Check file status
+  * Add File - change into stage
+  * Commit files
+  * Check current signature
+  * Remove file from Git repo
+## 1. Baiscs:
 Git is actually a cache containing tracked files information in working directory, so every change happens on tracked files will be recorded for version control.  
 There are 3 places: working directory, stage and git repo.  
-There are 2 status of a file in working directory: tracked, untracked.  
+Correspondingly there are 3 status of a file: in working directory: tracked, untracked.  
 
-### 1.1. General steps to commit changes:  
+### 1.1. File status:  
 Changes in working directory, add to stage, and commit changes.  
 
-| working diorectory | file status | add to stage | file status | commit | git repo |
-| --- | --- | --- | --- | --- | --- |
-| add new files | untracked | git add | staged untracked | git commit |	files added |
-| modify files | tracked modified | git add | staged modifed | git commit |	files updated |
-| delete files | tracked deleted | git add | staged deleted | git commit |	files deleted |  
+| action in working dir | file status | command | file status | command | file status | File in Git Repo |
+| --- | --- | --- | --- | --- | --- | --- |
+| add new files | untracked | git add | staged | git commit |	unmodified | added |
+| modify files that are added | unmodified | git add | staged | git commit |	unmodified | files updated |
+| delete files that are added | unmodified | git add | staged | git commit |	untracked | files deleted |  
 
-A change must be added into stage first and then committed into the Git repository.  
+A change must be added into stage first and then committed into the Git repository, and please be notice the file. Please check the lifecycle of the file in git in graph below:<br>
+
+![alt text](./../../imgs/git-file-lifecycle.png "Title")
 
 ## 2. Examples
-### 2.1 Make a working directory a git repo
+### 2.1 Initiate a git repo
 `mkdir GitTestDir`  
 `git init`  
-There is a foler `.git` created in current working directory, `git init` is to initiate the directory as a Git directory that can be version controlled from now on.  
+A file `.git` created in current working directory, `git init` is to create a cache in the directory to make version controlled possible from now on.  
 
 ### 2.2 Check status
 `git status`  
@@ -30,9 +42,13 @@ nothing to commit (create/copy files and use "git add" to track)
 ```  
 This command is to check that status of the git repository. Because there is nothing in working directory, it shows "nothing to commit" for now.  
 
-### 2.3 Add a file into tracked
+### 2.3 Add a file into stage
+Create a text file `firstFile.txt` in working directory, and check the file's current status with commands below:<br>
+
 `vim firstFile.txt`  
 `git status`  
+
+It shows `nothing added to commit but untracked files present`.<br>
 ```
 On branch master
 Initial commit
@@ -41,10 +57,12 @@ Untracked files:
         firstFile.txt
 nothing added to commit but untracked files present (use "git add" to track)
 ```  
-Create a text file in working directory, and check current status.  
-This new added file is detected but not added into stage yet, so it shows `nothing added to commit but untracked files present` which means this file won't be committed when you use `git commit fileName -m 'xx'` to commit file.  
-<br>  
+
+It means the file is not staged and it will not be committed when you use `git commit fileName -m 'xx'`.  
+
+We need add this file into stage with commnd below: <br>
 `git add firstFile.txt`  
+then check the file status: <br>
 `git status`  
 ```
 On branch master
@@ -53,11 +71,12 @@ Changes to be committed:
   (use "git rm --cached <file>..." to unstage)
         new file:   firstFile.txt
 ```
-Add `firstFile.txt` into stage and check git status again.  
-Because this file has already been added into stage, it shows under "Changes to be committed" which means the file can be committed now.  
-<br>  
+Now, `firstFile.txt` has already been added into stage, and it is displayed under "Changes to be committed" which means the file can be committed now.  
+
+modify the file firstFilat this time point and then check status again.<br>
 `vim firstFile.txt`  
 `git status`  
+As we can see, new modifications are not automatically added into the stage, the change is under `Changes not staged for commit:` which means this file modificatoin is not going to be committed in next commit.
 ```
 On branch master
 
@@ -71,11 +90,10 @@ Changes not staged for commit:
   (use "git checkout -- <file>..." to discard changes in working directory)
         modified:   firstFile.txt
 ```
-modify the file firstFilat this time point and then check status again.  
-New modifications are not automatically added into the stage, this change is under `Changes not staged for commit:` which means this file modificatoin is not going to be committed in next commit.  
-<br>  
   
 ### 2.4 Commit files
+Add a new change(firstFile) into stage and then commit it.  
+`working directory clean` means no change detected in working directory and nothing in stage. <br>
 `git add firstFile.txt`  
 `git commit firstFile.txt -m 'check in the first file'`  
 `git status`  
@@ -83,19 +101,18 @@ New modifications are not automatically added into the stage, this change is und
 On branch master
 nothing to commit, working directory clean
 ```
-Add a new change(firstFile) into stage and then commit it.  
-`working directory clean` means no change detected in working directory and nothing in stage. 
 
-### 2.5 Check current files in Git repo
+### 2.5 Check current signature
 `git ls-tree master`  
-check current files in git repo and result is shown below:  
+check current signature of git repo and result is shown below:  
 `100644 blob eca59ec8d25ead4c2815a431f40fa3df9d84d428    firstFile.txt`  
 
 Tip:  
 When use command `ls`, files shown are just files in working directory but not in git repo(although the 2 can be the same, they are different in most case).  
 To check files in git repo, use `git ls-tree {branch name}`
 
-### 2.6 Untrack files in git repo
+### 2.6 remove files from stage
+If you don't want file `firstFile.txt` to be exposed to others in a git repo, you can delete it from git repo and remove it from stage.  
 `git rm --cache  firstFile.txt`  
 `git status`  
 ```
@@ -107,7 +124,6 @@ Untracked files:
   (use "git add <file>..." to include in what will be committed)
         firstFile.txt
 ```
-If I don't want file `firstFile.txt` to be exposed to others, I can delete it from my git repo and stop tracking the file anymore.  
 First I need to remove it from my git repo and then commit this change into repo.  
 This delete change is already pushed to stage and file is untracked, but if I don't want to see the file in git repo, I need to commit this change.  
 <br>  

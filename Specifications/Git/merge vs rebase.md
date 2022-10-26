@@ -1,5 +1,5 @@
 # Merge vs Rebase
-When you decide new feature, you probably create a new branch in the git repository and then do develop in the the feature. After the development is done, the new change can be merged to the master or develop.  
+When you developed new feature, you probably want to create a new branch in the git repository and then develop in the the feature. After the development is done, the new change can be merged to the master or develop.  
 ## Merge
 If the master or develop branch is not touched as of merge of your branch, there is no problem.  
 ```
@@ -12,7 +12,9 @@ git merge <your branch name>
 ## Rebase
 While merge is straight-forward to use and understand, there are some issues when scenario got a little bit difficult.  
 
-Merge may mess up your git logs. Think about a pretty hot project, a lot of developers commit changes to master branch. You cannot just finish your development and merge your branch into master because current master might has changes not included in your branch. The process is: 1. Merge changes on master committed after you create your branch. 2. push your change to the master branch.  
+Merge may mess up your git logs. Think about a pretty hot project, a lot of developers commit changes to master branch. You cannot just finish your development and merge your branch into master because latest modifications of current master are not included in your branch. The process is: 
+1. Merge changes on master committed after you create your branch. 
+2. push your change to the master branch.  
 
 In above scenario, `rebase` is useful. Let take an example:
 ### 1. Initiate a new git repo, and create a file and commit it and then check log.
