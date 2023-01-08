@@ -6,7 +6,7 @@ Data type of the handler could be `Task`, `Task<T>` and `void`.
 + If there is something supposed to be returned, use `Task<T>` to return the handler. To see the value, use `wait` to wait to the end of task and get result from the returned task. Pleas be attention that call result for a task will enforce a wait.  
 
 Example:
-```
+```C#
 public static async Task<int> GetWebsiteLength()
 {
 	var httpClient = new HttpClient();

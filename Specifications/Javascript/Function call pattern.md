@@ -12,11 +12,11 @@ printInfo();
 //output: undefined.
 ```
 
-This kind of code is definitely illegal in OOP lanaguage, while in it is legal in js since default context(consider it as class) is window. The reason `undefined` printed is because default context of the function `printInfo` is window in which there is no attribute `name` defined.  
+This kind of code is definitely illegal in OOP lanaguage, but works in js since default context(consider it as class) is window. The reason `undefined` printed is because default context of the function `printInfo` is window in which there is no attribute `name` defined.  
 
 ### Difference 2:
-In javascript, keyword this always points to current context rather than the object where the function defined.
-```
+In javascript, keyword `this` always points to current context rather than the object where the function defined.
+```js
 var obj = {
     name: 'qingyangkong',
     printInfo: function(){
@@ -33,10 +33,10 @@ func();
 
 The result for the first one is 'qingyangkong', while the second one is undefined. This is because that `func()`'s context is window and it is trying find window.name that does not exist at all. 
 
-### pattern to use context correctly.
+### pattern to use context correctly
 #### constructor pattern 
-Function are defined to be used with syntax new is called constructor. 
-```
+Function are defined to be used with syntax `new` is called constructor. 
+```js
 function printInfoConstructorPattern() {
     this.func = function() {return 'qingyangkong';}
 }
@@ -47,7 +47,7 @@ console.log(test.func());
 func.call(obj, args1, args2);  
 func.apply(obj, [args1, args2 ]);
 
-```
+```js
 function printInfoApplyPattern(a, b){
     console.log(a + b);
     console.log(this.name);
@@ -59,7 +59,7 @@ printInfoApplyPattern.call(objApplyPattern, 1, 2);
 printInfoApplyPattern.apply(objApplyPattern, [1, 2]);
 ```
 var boundFunc = func.bind(object)
-```
+```js
 //bind invocation pattern
 function printInfoBindPattern(a, b){
     console.log(a + b);

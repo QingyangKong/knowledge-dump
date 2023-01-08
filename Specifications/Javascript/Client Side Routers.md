@@ -1,7 +1,7 @@
 # Client Side Routers
 ## What is CSR?
 It is not very easy to understand the router mechanism used by front-end frameworks. You always needs to write some routes to control components in front-end framework without sending requests to back-end. Sample codes are like below, for example, in React:
-```
+```xml
 <Switch>
     <Route path='/body' component={MyRouterBody}></Route>
     <Route path='/head' component={MyRouterHead}></Route>
@@ -17,7 +17,7 @@ Here is the problem: as said before, user must download all js codes first and t
 
 ## How to solve it?
 The solution is to force all urls to the fixed url and sample solution of for React is posted below. In Webpack-development-server, you need to force all server requests to `index.html` by modifying the config file `webpack.config.js`.
-```
+```json
 var config = {
 	entry: './main.js',
 	output: {
