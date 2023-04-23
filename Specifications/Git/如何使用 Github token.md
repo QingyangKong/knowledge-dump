@@ -7,9 +7,10 @@
 ![alt text](./../../imgs/Github-token-1.png "Title")
 这种验证方式在 2021 年 8 月 13 日久废止了，所以还是要使用 token 来解决远程验证问题。
 
-有一种方式在这里记录了
+当然也可以使用 SSH 的 key 来做同样的事情，但是 GitHub 官方现在推荐的方式是 token，相较于 SSH key，token 有一些优势，详细可以看这个回答：[In what ways is an SSH Key different from tokens for git authentication?](https://stackoverflow.com/questions/67077837/in-what-ways-is-an-ssh-key-different-from-tokens-for-git-authentication)
 
-https://zhuanlan.zhihu.com/p/501872439
+如何使用 token，记录在了这里
+[github访问令牌token的创建方法](https://zhuanlan.zhihu.com/p/501872439)，步骤如下：
 
 在 profile -> settings -> Personal access token -> Tokens(classic) 中生成一个所需权限的 token。
 
