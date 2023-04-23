@@ -25,6 +25,8 @@ git fetch upstream
 ```
 git merge upstream/master
 ```
+这个命令会将 fetch 的代码 merge 到当前的分支，如果不需要 merge 到主分支，可以 `git checkout feature-1` 切换到一个特性分支，然后运行 git merge upstream/master 将 upstream 的分支 merge 到主分支。
+
 5. push 到自己 GitHub 中的 repo
 ```
 git push
