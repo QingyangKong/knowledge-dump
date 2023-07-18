@@ -26,6 +26,7 @@ Changes in working directory, add to stage, and commit changes.
 A change must be added into stage first and then committed into the Git repository, and please be notice the file. Please check the lifecycle of the file in git in graph below:<br>
 
 ![alt text](./../../imgs/git-file-lifecycle.png "Title")
+![alt text](./../../imgs/github.png "Title")
 
 ## 2. Examples
 ### 2.1 Initiate a git repo
