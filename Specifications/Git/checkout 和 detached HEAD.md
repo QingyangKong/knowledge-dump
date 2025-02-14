@@ -1,4 +1,4 @@
-# 如何查理解 checkout 命令
+# checkout 和 detached HEAD
 ## HEAD 的定义
 先查看 https://www.cloudbees.com/blog/git-detached-head
 
@@ -34,7 +34,7 @@ git checkout <branchName>
 入下图所示：
 
 ![alt text](./../../imgs/before-checkout.png "Title")
-checkout 之前，HEAD 指向最新的 commit，同时用户在 working directory 和 staging 做出来修改。
+checkout 之前，HEAD 指向最新的 commit，此时用户在 working directory 和 staging 做出来修改，但是这些 changes并没有 commit，也就是说没有更新到 git repo 中。<br/><br/>
 
 ![alt text](./../../imgs/after-checkout.png "Title")
-checkout 之后，HEAD 指向 commit 2，同时用户在 working directory 和 staging 的状态发生了变化但是还未commit的 changes 不变。
+checkout 之后，如果在新的 branch中，没有 state3，只有state1和state2，那么HEAD 指向 commit 2，此时用户在 working directory 和 staging 的状态发生了变化，但是刚才没有commit的 changes 不变，还是会出现在 working directory中。
